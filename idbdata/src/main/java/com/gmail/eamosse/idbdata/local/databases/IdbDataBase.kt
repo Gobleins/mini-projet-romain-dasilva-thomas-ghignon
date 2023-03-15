@@ -2,6 +2,7 @@ package com.gmail.eamosse.idbdata.local.databases
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.gmail.eamosse.idbdata.local.daos.CategoryDao
 import com.gmail.eamosse.idbdata.local.daos.TokenDao
 import com.gmail.eamosse.idbdata.local.entities.TokenEntity
 
@@ -14,4 +15,5 @@ import com.gmail.eamosse.idbdata.local.entities.TokenEntity
 )
 internal abstract class IdbDataBase : RoomDatabase() {
     abstract fun tokenDao(): TokenDao
+    abstract fun categoryDao(): CategoryDao
 }
