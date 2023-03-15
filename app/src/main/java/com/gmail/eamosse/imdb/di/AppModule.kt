@@ -1,7 +1,6 @@
 package com.gmail.eamosse.imdb.di
 
-import android.content.Context
-import com.gmail.eamosse.imdb.ui.home.HomeViewModel
+import com.gmail.eamosse.imdb.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +12,7 @@ import javax.inject.Named
 object AppModule {
     @Named ("API_KEY")
     @Provides
-    fun provideApiKey() = "d256cc80a0719e585bd765541e432b22"
+    fun provideApiKey() = BuildConfig.API_KEY
 
     @Named ("BASE_URL")
     @Provides
