@@ -1,5 +1,6 @@
 package com.gmail.eamosse.idbdata.datasources
 
+import com.gmail.eamosse.idbdata.api.response.CategoryResponse
 import com.gmail.eamosse.idbdata.data.Token
 import com.gmail.eamosse.idbdata.local.daos.TokenDao
 import com.gmail.eamosse.idbdata.local.entities.TokenEntity
@@ -27,6 +28,10 @@ internal class LocalDataSource @Inject constructor(private val tokenDao: TokenDa
         withContext(Dispatchers.IO) {
             tokenDao.insert(token.toEntity())
         }
+    }
+
+    override suspend fun getCategories(): Result<List<CategoryResponse.Genre>> {
+        TODO("Not yet implemented")
     }
 }
 
