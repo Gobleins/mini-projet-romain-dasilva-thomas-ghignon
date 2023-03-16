@@ -115,6 +115,7 @@ class BasicInterceptor(
         val url = original.url
             .newBuilder()
             .addQueryParameter("api_key", apiKey)
+            .addQueryParameter("jesuis", "un testeur")
             .build()
 
         // Request customization: add request headers
