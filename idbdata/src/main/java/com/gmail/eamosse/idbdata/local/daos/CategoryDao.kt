@@ -7,7 +7,7 @@ import com.gmail.eamosse.idbdata.local.entities.CategoryEntity
 @Dao
 internal interface CategoryDao {
     @Query("SELECT * FROM category")
-    fun getAll(): List<Category>
+    fun getAll(): List<CategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg category: CategoryEntity)

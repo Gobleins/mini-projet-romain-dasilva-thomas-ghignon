@@ -33,7 +33,9 @@ object DataModule {
         return Room.databaseBuilder(
             appContext,
             IdbDataBase::class.java, "idb_database.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

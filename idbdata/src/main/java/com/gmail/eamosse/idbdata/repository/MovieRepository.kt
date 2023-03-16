@@ -39,9 +39,7 @@ class MovieRepository @Inject internal constructor(
             is Result.Succes -> {
                 // On utilise la fonction map pour convertir les catégories de la réponse serveur
                 // en liste de categories d'objets de l'application
-                val categories = result.data.map {
-                    it.toCategory()
-                }
+                val categories = result.data
                 Result.Succes(categories)
             }
             is Result.Error -> result

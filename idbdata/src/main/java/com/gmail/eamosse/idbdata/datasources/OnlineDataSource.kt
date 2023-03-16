@@ -3,8 +3,10 @@ package com.gmail.eamosse.idbdata.datasources
 import com.gmail.eamosse.idbdata.api.parse
 import com.gmail.eamosse.idbdata.api.response.CategoryResponse
 import com.gmail.eamosse.idbdata.api.response.TokenResponse
+import com.gmail.eamosse.idbdata.api.response.toCategory
 import com.gmail.eamosse.idbdata.api.response.toToken
 import com.gmail.eamosse.idbdata.api.service.MovieService
+import com.gmail.eamosse.idbdata.data.Category
 import com.gmail.eamosse.idbdata.data.Token
 import com.gmail.eamosse.idbdata.utils.Result
 import javax.inject.Inject
@@ -39,12 +41,14 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
         }
     }
 
-    override suspend fun getCategories(): Result<List<CategoryResponse.Genre>> {
+    override suspend fun getCategories(): Result<List<Category>> {
         return try {
             val response = service.getCategories()
 
             when (val res = response.parse()) {
-                is Result.Succes -> Result.Succes(res.data.genres)
+                is Result.Succes -> Result.Succes(res.data.genres.map{
+                    it.toCategory()
+                })
                 is Result.Error -> res
             }
         } catch (e: Exception) {
