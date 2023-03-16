@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_favorites"
         android:icon="@drawable/heart"
-        android:title="@string/title_fa" />
+        android:title="@string/title_favorites" />
 
     <item
         android:id="@+id/navigation_notifications"
