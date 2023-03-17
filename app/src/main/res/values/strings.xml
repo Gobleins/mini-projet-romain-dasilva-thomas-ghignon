@@ -14,4 +14,6 @@
     <string name="image">image</string>
     <string name="title_favorites">Favorites</string>
     <string name="categorie">Catégorie</string>
+    <string name="actors">Acteurs</string>
+    <string name="category">Catégories</string>
 </resources>

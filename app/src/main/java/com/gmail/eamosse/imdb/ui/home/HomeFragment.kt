@@ -39,21 +39,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Get bg_image from view and add a blur effect
         bg_image = view.findViewById(R.id.header_blur_background)
-        //val imageView = view.findViewById<ImageView>(R.id.imageView6)
-
-
         val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 10)
-
         bg_image!!.setImageBitmap(blurredBitmap)
-
-//        Picasso.get()
-//            .load(R.mipmap.ic_avatar_foreground)
-//            .resize(1500, 1500) //set a larger size for the image
-//            .centerCrop()
-//            .transform(BlurTransformation(requireContext(),50))
-//            .into(bg_image)
 
         with(homeViewModel) {
             token.observe(viewLifecycleOwner, Observer {
