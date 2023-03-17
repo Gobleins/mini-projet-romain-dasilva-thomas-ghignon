@@ -16,4 +16,6 @@
     <string name="categorie">Catégorie</string>
     <string name="actors">Acteurs</string>
     <string name="category">Catégories</string>
+    <string name="highlightMovies">Films à la une</string>
+    <string name="highlightSeries">Séries à la une</string>
 </resources>

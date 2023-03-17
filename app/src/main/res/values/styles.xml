@@ -5,6 +5,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorTransparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
+<!--    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">-->
+<!--        <item name="cornerSize">30%</item>-->
+<!--    </style>-->
 
 </resources>

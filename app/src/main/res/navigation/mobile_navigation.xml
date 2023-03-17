@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.gmail.eamosse.imdb.ui.profile.ProfileFragment"
+        android:name="com.gmail.eamosse.imdb.ui.profile.DetailFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

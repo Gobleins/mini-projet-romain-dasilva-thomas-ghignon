@@ -18,7 +18,11 @@ import com.gmail.eamosse.imdb.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import com.gmail.eamosse.imdb.utils.FadingImageView
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -39,9 +43,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bg_image = view.findViewById(R.id.header_blur_background)
+//        bg_image = view.findViewById(R.id.header_blur_background)
+//        val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 20)
+//        bg_image!!.setImageBitmap(blurredBitmap)
+
+
+        val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
         val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 10)
-        bg_image!!.setImageBitmap(blurredBitmap)
+        fadeImage.setImageBitmap(blurredBitmap)
+        fadeImage.setEdgeLength(100)
+        fadeImage.setFadeBottom(true)
+
 
         with(homeViewModel) {
             token.observe(viewLifecycleOwner, Observer {
