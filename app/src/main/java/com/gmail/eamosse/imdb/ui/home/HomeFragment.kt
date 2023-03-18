@@ -22,7 +22,9 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.recyclerview.widget.RecyclerView
 import com.gmail.eamosse.imdb.utils.FadingImageView
+import com.gmail.eamosse.imdb.utils.FirstItemMarginDecoration
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -53,6 +55,10 @@ class HomeFragment : Fragment() {
         fadeImage.setImageBitmap(blurredBitmap)
         fadeImage.setEdgeLength(100)
         fadeImage.setFadeBottom(true)
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.category_list)
+        val margin = resources.getDimensionPixelSize(R.dimen.my_margin_size) // Replace with your desired margin size
+        recyclerView.addItemDecoration(FirstItemMarginDecoration(margin))
 
 
         with(homeViewModel) {
