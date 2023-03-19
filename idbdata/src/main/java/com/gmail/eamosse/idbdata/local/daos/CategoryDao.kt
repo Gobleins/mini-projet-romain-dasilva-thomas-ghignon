@@ -10,6 +10,6 @@ internal interface CategoryDao {
     fun getAll(): List<CategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(vararg category: CategoryEntity)
+    fun saveCategories(categories: List<CategoryEntity>)
 
 }

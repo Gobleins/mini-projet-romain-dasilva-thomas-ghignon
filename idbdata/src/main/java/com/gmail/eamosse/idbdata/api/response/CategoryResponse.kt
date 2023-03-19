@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 
 data class CategoryResponse(
-    @SerializedName("genres")
-    val genres: List<Genre>
+    @SerializedName("category")
+    val category: List<Category>
 ) {
-    data class Genre(
+    data class Category(
         @SerializedName("id")
         val id: Int,
         @SerializedName("name")
@@ -16,7 +16,14 @@ data class CategoryResponse(
     )
 }
 
-internal fun CategoryResponse.Genre.toCategory(): Category {
+internal fun CategoryResponse.Category.toCategory(): Category {
+    return Category(
+        id = this.id,
+        name = this.name
+    )
+}
+
+internal fun CategoryResponse.Category.toEntity(): Category {
     return Category(
         id = this.id,
         name = this.name
