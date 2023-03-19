@@ -11,7 +11,7 @@ data class Movie(
     val popularity: Double,
     val poster_path: String,
     val backdrop_path: String,
-    val category: List<Category>,
+    var category: List<Category> = listOf(),
     val release_date: String,
     val vote_average: Double,
     val overview: String,
@@ -26,7 +26,6 @@ internal fun Movie.toEntity() = MovieEntity(
     popularity = this.popularity,
     poster_path = this.poster_path,
     backdrop_path = this.backdrop_path,
-    category = this.category,
     release_date = this.release_date,
     vote_average = this.vote_average,
     overview = this.overview

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 
 data class MoviesResponse(
-    @SerializedName("movies")
+    @SerializedName("genres")
     val movies: List<MovieResponse>)
 
 data class MovieResponse(
@@ -26,8 +26,6 @@ data class MovieResponse(
     val poster_path: String,
     @SerializedName("backdrop_path")
     val backdrop_path: String,
-    @SerializedName("category")
-    val category: List<Category>,
     @SerializedName("release_date")
     val release_date: String,
     @SerializedName("vote_average")
@@ -43,7 +41,6 @@ data class MovieResponse(
         popularity = this.popularity,
         poster_path = this.poster_path,
         backdrop_path = this.backdrop_path,
-        category = this.category,
         release_date = this.release_date,
         vote_average = this.vote_average,
         overview = this.overview
@@ -57,7 +54,6 @@ data class MovieResponse(
         popularity = this.popularity,
         poster_path = this.poster_path,
         backdrop_path = this.backdrop_path,
-        category = this.category,
         release_date = this.release_date,
         vote_average = this.vote_average,
         overview = this.overview

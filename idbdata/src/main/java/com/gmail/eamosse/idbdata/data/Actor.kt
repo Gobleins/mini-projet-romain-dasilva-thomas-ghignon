@@ -6,7 +6,7 @@ data class Actor(
     val id: Int,
     val imdb_id: String,
     val name: String,
-    val movies: List<Movie> = listOf()
+    var movies: List<Movie> = listOf()
 )
 
 internal fun Actor.toEntity() = ActorEntity(

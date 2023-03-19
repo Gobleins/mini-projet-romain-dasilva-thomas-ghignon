@@ -1,8 +1,6 @@
 package com.gmail.eamosse.idbdata.datasources
 
 import com.gmail.eamosse.idbdata.api.parse
-import com.gmail.eamosse.idbdata.api.response.*
-import com.gmail.eamosse.idbdata.api.response.toCategory
 import com.gmail.eamosse.idbdata.api.response.toToken
 import com.gmail.eamosse.idbdata.api.safeCall
 import com.gmail.eamosse.idbdata.api.service.MovieService
@@ -23,10 +21,26 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
     override suspend fun getActor(id: Int): Result<Actor> {
         return safeCall {
             val response = service.getActor(id)
+            val moviesParse = service.getActorMovies(id).parse()
 
-            when (val res = response.parse()) {
-                is Result.Succes -> Result.Succes(res.data.toActor())
-                is Result.Error -> res
+            when (val responseParse = response.parse()) {
+                is Result.Succes -> safeCall {
+                    when (moviesParse) {
+                        is Result.Succes -> safeCall {
+                            val movies = moviesParse.data.movies.map {
+                                it.toMovie()
+                            }
+
+                            val actor = responseParse.data.toActor()
+                            actor.movies = movies
+
+                            Result.Succes(actor)
+                        }
+                        is Result.Error -> moviesParse
+                    }
+
+                }
+                is Result.Error -> responseParse
             }
         }
     }
