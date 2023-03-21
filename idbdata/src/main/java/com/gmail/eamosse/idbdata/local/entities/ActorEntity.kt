@@ -33,11 +33,13 @@ internal data class ActorWithMovies(
     val movies: List<MovieEntity>
 )
 
-internal fun ActorWithMovies.toActors() = Actor(
-    id = actor.id,
-    imdb_id = actor.imdb_id,
-    name = actor.name,
-    movies = this.movies.map{
-        it.toMovie()
-    }
-)
+internal fun ActorWithMovies.toActor(): Actor {
+    return Actor(
+        id = actor.id,
+        imdb_id = actor.imdb_id,
+        name = actor.name,
+        movies = this.movies.map{
+            it.toMovie()
+        }
+    )
+}

@@ -89,7 +89,7 @@ internal class LocalDataSource @Inject constructor(
      */
     override suspend fun getMoviesByCategory(category: Category, limit: Int): Result<List<Movie>> = withContext(Dispatchers.IO) {
         safeCall {
-            val movies = movieDao.getMoviesByCategory(category, limit).map {
+            val movies = movieDao.getMoviesByCategory(category.id, limit).map {
                 it.toMovie()
             }
             Result.Succes(movies)
@@ -160,10 +160,10 @@ internal class LocalDataSource @Inject constructor(
         movieDao.saveMovie(movie.toEntity()).also {
             movie.actors.onEach {
                 movieDao.saveActors(listOf(it.toEntity()))
-                movieDao.saveActorMovieCrassRef(
+                movieDao.saveActorMovieCrossRef(
                     ActorMovieCrossRef(
-                        movieId = movie.id,
-                        actorId = it.id
+                        movie_id = movie.id,
+                        actor_id = it.id
                     )
                 )
             }

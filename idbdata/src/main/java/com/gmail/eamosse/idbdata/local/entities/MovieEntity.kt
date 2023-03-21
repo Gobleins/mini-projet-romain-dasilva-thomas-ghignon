@@ -1,8 +1,6 @@
 package com.gmail.eamosse.idbdata.local.entities
 
 import androidx.room.*
-import com.gmail.eamosse.idbdata.data.Actor
-import com.gmail.eamosse.idbdata.data.Category
 import com.gmail.eamosse.idbdata.data.Movie
 
 
@@ -19,8 +17,6 @@ internal data class MovieEntity(
     val popularity: Double,
     val poster_path: String,
     val backdrop_path: String,
-    // TODO comme pour les acteurs
-    val category: List<Category>,
     val release_date: String,
     val vote_average: Double,
     val overview: String
@@ -35,24 +31,30 @@ internal fun MovieEntity.toMovie(): Movie {
         popularity = this.popularity,
         poster_path = this.poster_path,
         backdrop_path = this.backdrop_path,
-        category = this.category,
         release_date = this.release_date,
         vote_average = this.vote_average,
         overview = this.overview,
     )
 }
 
-internal data class MovieWithActors(
+internal data class MovieWithActorsAndCategory(
     @Embedded val movie: MovieEntity,
     @Relation(
-        parentColumn = "actor_id",
-        entityColumn = "movie_id",
+        parentColumn = "movie_id",
+        entityColumn = "actor_id",
         associateBy = Junction(ActorMovieCrossRef::class)
     )
-    val actors: List<ActorEntity>
+    val actors: List<ActorEntity>,
+    @Relation(
+        parentColumn = "movie_id",
+        entityColumn = "category_id",
+        associateBy = Junction(CategoryMovieCrossRef::class)
+    )
+    val categories: List<CategoryEntity>
 )
 
-internal fun MovieWithActors.toMovie(): Movie {
+
+internal fun MovieWithActorsAndCategory.toMovie(): Movie {
     return Movie(
         id = this.movie.id,
         imdb_id = movie.imdb_id,
@@ -61,7 +63,9 @@ internal fun MovieWithActors.toMovie(): Movie {
         popularity = movie.popularity,
         poster_path = movie.poster_path,
         backdrop_path = movie.backdrop_path,
-        category = movie.category,
+        category = this.categories.map{
+            it.toCategory()
+        },
         release_date = movie.release_date,
         vote_average = movie.vote_average,
         overview = movie.overview,

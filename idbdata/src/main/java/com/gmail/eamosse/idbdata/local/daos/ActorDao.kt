@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.gmail.eamosse.idbdata.data.Actor
 import com.gmail.eamosse.idbdata.local.entities.ActorEntity
+import com.gmail.eamosse.idbdata.local.entities.ActorWithMovies
 import com.gmail.eamosse.idbdata.local.entities.MovieEntity
 
 @Dao
@@ -12,8 +14,8 @@ internal interface ActorDao {
     @Query("SELECT * FROM actor")
     fun getAll(): List<ActorEntity>
 
-    @Query("SELECT * FROM actor WHERE id = :id")
-    fun getActor(id: Int): ActorEntity
+    @Query("SELECT * FROM actor WHERE actor_id = :id")
+    fun getActor(id: Int): ActorWithMovies?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveActor(actor: ActorEntity)
