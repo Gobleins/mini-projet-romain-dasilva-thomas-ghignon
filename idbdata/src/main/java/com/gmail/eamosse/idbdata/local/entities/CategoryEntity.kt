@@ -1,5 +1,6 @@
 package com.gmail.eamosse.idbdata.local.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gmail.eamosse.idbdata.data.Category
@@ -9,6 +10,7 @@ import com.gmail.eamosse.idbdata.data.Category
 )
 internal data class CategoryEntity(
     @PrimaryKey
+    @ColumnInfo(name = "category_id")
     val id: Int,
     val name: String
 )
