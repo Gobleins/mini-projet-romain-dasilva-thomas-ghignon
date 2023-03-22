@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,10 +17,6 @@ import com.gmail.eamosse.imdb.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.eamosse.imdb.utils.FadingImageView
 import com.gmail.eamosse.imdb.utils.FirstItemMarginDecoration
@@ -32,7 +27,6 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
-    private var bg_image: ImageView? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,9 +39,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        bg_image = view.findViewById(R.id.header_blur_background)
-//        val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 20)
-//        bg_image!!.setImageBitmap(blurredBitmap)
+        with(homeViewModel) {
+            token.observe(viewLifecycleOwner, Observer {
+                //récupérer les catégories$
+                getPopularMovies()
+                getCategories()
+            })
+
+            movies.observe(viewLifecycleOwner, Observer {
+                binding.homeMoviesList.adapter = MovieAdapter(it)
+            })
+            categories.observe(viewLifecycleOwner, Observer {
+                binding.categoryList.adapter = CategoryAdapter(it)
+            })
+
+            error.observe(viewLifecycleOwner, Observer {
+                //afficher l'erreur
+            })
+        }
 
 
         val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
@@ -57,24 +66,8 @@ class HomeFragment : Fragment() {
         fadeImage.setFadeBottom(true)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.category_list)
-        val margin = resources.getDimensionPixelSize(R.dimen.my_margin_size) // Replace with your desired margin size
+        val margin = resources.getDimensionPixelSize(R.dimen.my_margin_size)
         recyclerView.addItemDecoration(FirstItemMarginDecoration(margin))
-
-
-        with(homeViewModel) {
-            token.observe(viewLifecycleOwner, Observer {
-                //récupérer les catégories
-                getCategories()
-            })
-
-            categories.observe(viewLifecycleOwner, Observer {
-                binding.categoryList.adapter = CategoryAdapter(it)
-            })
-
-            error.observe(viewLifecycleOwner, Observer {
-                //afficher l'erreur
-            })
-        }
     }
 
     fun blurBitmap(context: Context, drawableId: Int, iterations: Int): Bitmap {
