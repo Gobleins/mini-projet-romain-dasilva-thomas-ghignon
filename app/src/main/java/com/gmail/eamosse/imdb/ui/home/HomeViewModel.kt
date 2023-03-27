@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gmail.eamosse.idbdata.data.Category
+import com.gmail.eamosse.idbdata.data.Movie
 import com.gmail.eamosse.idbdata.data.Token
 import com.gmail.eamosse.idbdata.repository.MovieRepository
 import com.gmail.eamosse.idbdata.utils.Result
@@ -28,6 +29,10 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     val categories: LiveData<List<Category>>
         get() = _categories
 
+    private val _movies: MutableLiveData<List<Movie>> = MutableLiveData()
+    val movies: LiveData<List<Movie>>
+        get() = _movies
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,6 +52,19 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
             when (val result = repository.getCategories()) {
                 is Result.Succes -> {
                     _categories.postValue(result.data)
+                }
+                is Result.Error -> {
+                    _error.postValue(result.message)
+                }
+            }
+        }
+    }
+
+    fun getPopularMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getPopularMovies()) {
+                is Result.Succes -> {
+                    _movies.postValue(result.data)
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)

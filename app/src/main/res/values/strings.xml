@@ -8,8 +8,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-
     <string name="home_second">Home Second</string>
+    <string name="title_profile">Profile</string>
     <string name="textview">TextView</string>
     <string name="image">image</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="categorie">Catégorie</string>
+    <string name="actors">Acteurs</string>
+    <string name="category">Catégories</string>
+    <string name="highlightMovies">Films à la une</string>
+    <string name="highlightSeries">Séries à la une</string>
 </resources>

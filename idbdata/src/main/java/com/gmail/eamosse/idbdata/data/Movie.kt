@@ -2,6 +2,7 @@ package com.gmail.eamosse.idbdata.data
 
 import com.gmail.eamosse.idbdata.api.response.CategoryResponse
 import com.gmail.eamosse.idbdata.local.entities.MovieEntity
+import com.gmail.eamosse.idbdata.utils.ItemList
 
 data class Movie(
     val id: Int,
@@ -17,6 +18,10 @@ data class Movie(
     val overview: String,
     var actors: List<Actor> = listOf()
 )
+//    : ItemList {
+//    override val name: String
+//        get() = title
+//}
 
 internal fun Movie.toEntity() = MovieEntity(
     id = this.id,
