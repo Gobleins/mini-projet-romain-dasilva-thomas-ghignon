@@ -11,7 +11,6 @@ internal data class MovieEntity(
     @PrimaryKey
     @ColumnInfo(name = "movie_id")
     val id: Int,
-    val imdb_id: String,
     val title: String,
     val video: Boolean,
     val popularity: Double,
@@ -25,7 +24,6 @@ internal data class MovieEntity(
 internal fun MovieEntity.toMovie(): Movie {
     return Movie(
         id = this.id,
-        imdb_id = this.imdb_id,
         title = this.title,
         video = this.video,
         popularity = this.popularity,
@@ -57,7 +55,6 @@ internal data class MovieWithActorsAndCategory(
 internal fun MovieWithActorsAndCategory.toMovie(): Movie {
     return Movie(
         id = this.movie.id,
-        imdb_id = movie.imdb_id,
         title = movie.title,
         video = movie.video,
         popularity = movie.popularity,

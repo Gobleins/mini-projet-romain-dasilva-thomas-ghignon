@@ -8,14 +8,12 @@ import com.google.gson.annotations.SerializedName
 
 
 data class MoviesResponse(
-    @SerializedName("genres")
+    @SerializedName("results")
     val movies: List<MovieResponse>)
 
 data class MovieResponse(
     @SerializedName("id")
     val id: Int,
-    @SerializedName("imdb_id")
-    val imdb_id: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("video")
@@ -35,7 +33,6 @@ data class MovieResponse(
 ){
     internal fun toEntity() = MovieEntity(
         id = this.id,
-        imdb_id = this.imdb_id,
         title = this.title,
         video = this.video,
         popularity = this.popularity,
@@ -48,7 +45,6 @@ data class MovieResponse(
 
     internal fun toMovie() = Movie(
         id = this.id,
-        imdb_id = this.imdb_id,
         title = this.title,
         video = this.video,
         popularity = this.popularity,
