@@ -6,7 +6,6 @@ import com.gmail.eamosse.idbdata.utils.ItemList
 
 data class Movie(
     val id: Int,
-    val imdb_id: String,
     val title: String,
     val video: Boolean,
     val popularity: Double,
@@ -25,7 +24,6 @@ data class Movie(
 
 internal fun Movie.toEntity() = MovieEntity(
     id = this.id,
-    imdb_id = this.imdb_id,
     title = this.title,
     video = this.video,
     popularity = this.popularity,
