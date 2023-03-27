@@ -67,6 +67,20 @@ class MovieRepository @Inject internal constructor(
     }
 
     suspend fun getPopularMovies(): Result<List<Movie>> {
+        return when(val result = online.getPopularMovies()) {
+            is Result.Succes -> {
+                // On utilise la fonction map pour convertir les catégories de la réponse serveur
+                // en liste de categories d'objets de l'application
+                val movies = result.data
+                local.saveMovies(movies)
+                Result.Succes(movies)
+            }
+            is Result.Error -> result
+        }
+    }
+
+    /*
+        suspend fun getPopularMovies(): Result<List<Movie>> {
         return online.getPopularMovies().also {
             if (it is Result.Succes) {
                 local.saveMovies(it.data)
@@ -78,6 +92,9 @@ class MovieRepository @Inject internal constructor(
             }
         }
     }
+
+     */
+
 
     /**
      * Récupérer le token permettant de consommer les ressources sur le serveur
