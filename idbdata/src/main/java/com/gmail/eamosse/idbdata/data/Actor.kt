@@ -4,13 +4,15 @@ import com.gmail.eamosse.idbdata.local.entities.ActorEntity
 
 data class Actor(
     val id: Int,
-    val imdb_id: String,
+    val imdb_id: String?,
     val name: String,
+    val profile_path: String?,
     var movies: List<Movie> = listOf()
 )
 
 internal fun Actor.toEntity() = ActorEntity(
     id = this.id,
-    imdb_id = this.imdb_id,
-    name = this.name
+    imdb_id = this.imdb_id ?: "",
+    name = this.name,
+    profile_path = this.profile_path ?: ""
 )
