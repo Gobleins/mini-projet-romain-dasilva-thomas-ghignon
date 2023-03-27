@@ -13,20 +13,25 @@ data class ActorResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("imdb_id")
-    val imdb_id: String = "",
+    val imdb_id: String?,
     @SerializedName("name")
-    val name: String)
+    val name: String,
+    @SerializedName("profile_path")
+    val profile_path: String?
+)
 {
     internal fun toActor() = Actor(
         id = this.id,
-        imdb_id = this.imdb_id,
+        imdb_id = this.imdb_id ?: "",
         name = this.name,
+        profile_path = this.profile_path ?: ""
     )
 
     internal fun toEntity() = ActorEntity(
         id = this.id,
-        imdb_id = this.imdb_id,
+        imdb_id = this.imdb_id ?: "",
         name = this.name,
+        profile_path = this.profile_path ?: ""
     )
 }
 

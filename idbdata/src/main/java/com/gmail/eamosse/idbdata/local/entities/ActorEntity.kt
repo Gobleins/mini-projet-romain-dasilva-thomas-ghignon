@@ -11,15 +11,17 @@ internal data class ActorEntity(
     @PrimaryKey
     @ColumnInfo(name = "actor_id")
     val id: Int,
-    val imdb_id: String,
+    val imdb_id: String?,
     val name: String,
+    val profile_path: String?
 )
 
 internal fun ActorEntity.toActor(): Actor {
     return Actor(
         id = this.id,
-        imdb_id = this.imdb_id,
+        imdb_id = this.imdb_id ?: "",
         name = this.name,
+        profile_path = this.profile_path ?: ""
     )
 }
 
@@ -36,8 +38,9 @@ internal data class ActorWithMovies(
 internal fun ActorWithMovies.toActor(): Actor {
     return Actor(
         id = actor.id,
-        imdb_id = actor.imdb_id,
+        imdb_id = actor.imdb_id ?: "",
         name = actor.name,
+        profile_path = actor.profile_path ?: "",
         movies = this.movies.map{
             it.toMovie()
         }
