@@ -45,6 +45,19 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
         }
     }
 
+    override suspend fun getPopularActors(): Result<List<Actor>> {
+        return safeCall {
+            val response = service.getPopularActors()
+
+            when (val res = response.parse()) {
+                is Result.Succes -> Result.Succes(res.data.actors.map {
+                    it.toActor()
+                })
+                is Result.Error -> res
+            }
+        }
+    }
+
     /** Récupérer la liste des catégories
      * @return [Result<List<Category>>]
      * Si [Result.Succes], tout s'est bien passé
@@ -78,7 +91,7 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
                 is Result.Succes -> safeCall {
                     when (actorsParse) {
                         is Result.Succes -> safeCall {
-                            val actors = actorsParse.data.actors.map {
+                            val actors = actorsParse.data.credits.map {
                                 it.toActor()
                             }
 

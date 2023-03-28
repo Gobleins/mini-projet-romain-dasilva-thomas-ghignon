@@ -2,7 +2,6 @@ package com.gmail.eamosse.idbdata.api.service
 
 import com.gmail.eamosse.idbdata.api.response.*
 import com.gmail.eamosse.idbdata.api.response.TokenResponse
-import com.gmail.eamosse.idbdata.data.Category
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,7 +15,10 @@ internal interface MovieService {
     suspend fun getCategories(): Response<CategoriesResponse>
 
     @GET("person/{person_id}")
-    suspend fun getActor(@Path("person_id") actorId: Int): Response<ActorResponse>
+    suspend fun getActor(@Path("person_id") actorId: Int): Response<CreditResponse>
+
+    @GET("person/popular")
+    suspend fun getPopularActors(): Response<ActorsResponse>
 
     @GET("person/{person_id}/movie_credits")
     suspend fun getActorMovies(@Path("person_id") actorId: Int): Response<MoviesResponse>
@@ -25,7 +27,7 @@ internal interface MovieService {
     suspend fun getMovie(@Path("movie_id") movieId: Int): Response<MovieResponse>
 
     @GET("movie/{movie_id}/credits")
-    suspend fun getMovieActors(@Path("movie_id") movieId: Int): Response<ActorsResponse>
+    suspend fun getMovieActors(@Path("movie_id") movieId: Int): Response<CreditsResponse>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(): Response<MoviesResponse>
