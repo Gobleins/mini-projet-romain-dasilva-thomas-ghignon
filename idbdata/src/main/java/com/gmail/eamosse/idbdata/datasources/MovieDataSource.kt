@@ -8,6 +8,7 @@ import com.gmail.eamosse.idbdata.utils.Result
 
 interface MovieDataSource {
     suspend fun getActor(id: Int): Result<Actor>
+    suspend fun getPopularActors(): Result<List<Actor>>
     suspend fun getCategories(): Result<List<Category>>
     suspend fun getMovie(id: Int): Result<Movie>
     suspend fun getMovieActors(id: Int): Result<List<Actor>>

@@ -43,6 +43,13 @@ internal class LocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun getPopularActors(): Result<List<Actor>> = withContext(Dispatchers.IO) {
+        val actors = actorDao.getPopularActors().map{
+            it.toActor()
+        }
+        Result.Succes(actors)
+    }
+
     /**
      * Récupère la liste des catégories enregistrées en local
      * @return [Result<List<Category>>]

@@ -6,13 +6,18 @@ data class Actor(
     val id: Int,
     val imdb_id: String?,
     val name: String,
+    val popularity: Double,
     val profile_path: String?,
     var movies: List<Movie> = listOf()
 )
+
+
+
 
 internal fun Actor.toEntity() = ActorEntity(
     id = this.id,
     imdb_id = this.imdb_id ?: "",
     name = this.name,
+    popularity = this.popularity,
     profile_path = this.profile_path ?: ""
 )

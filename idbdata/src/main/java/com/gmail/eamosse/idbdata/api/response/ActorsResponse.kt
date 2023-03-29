@@ -5,7 +5,7 @@ import com.gmail.eamosse.idbdata.local.entities.ActorEntity
 import com.google.gson.annotations.SerializedName
 
 data class ActorsResponse(
-    @SerializedName("crew")
+    @SerializedName("results")
     val actors: List<ActorResponse>)
 
 
@@ -16,6 +16,8 @@ data class ActorResponse(
     val imdb_id: String?,
     @SerializedName("name")
     val name: String,
+    @SerializedName("popularity")
+    val popularity: Double,
     @SerializedName("profile_path")
     val profile_path: String?
 )
@@ -24,6 +26,7 @@ data class ActorResponse(
         id = this.id,
         imdb_id = this.imdb_id ?: "",
         name = this.name,
+        popularity = this.popularity,
         profile_path = this.profile_path ?: ""
     )
 
@@ -31,6 +34,7 @@ data class ActorResponse(
         id = this.id,
         imdb_id = this.imdb_id ?: "",
         name = this.name,
+        popularity = this.popularity,
         profile_path = this.profile_path ?: ""
     )
 }
