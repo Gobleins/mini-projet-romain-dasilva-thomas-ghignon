@@ -27,6 +27,17 @@ class MovieRepository @Inject internal constructor(
         }
     }
 
+    suspend fun getPopularActors(): Result<List<Actor>> {
+        return when(val result = online.getPopularActors()) {
+            is Result.Succes -> {
+                val actors = result.data
+                //local.saveActor(actors)
+                Result.Succes(actors)
+            }
+            is Result.Error -> result
+        }
+    }
+
     suspend fun getCategories(): Result<List<Category>> {
         return when(val result = online.getCategories()) {
             is Result.Succes -> {

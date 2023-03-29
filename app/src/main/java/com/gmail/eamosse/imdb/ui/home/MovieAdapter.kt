@@ -2,18 +2,37 @@ package com.gmail.eamosse.imdb.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.gmail.eamosse.idbdata.data.Movie
 import com.gmail.eamosse.idbdata.utils.ItemList
+import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.LargeListItemBinding
+import com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment
 
 class MovieAdapter(private val items: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: LargeListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Movie) {
+        fun bind(item: ItemList) {
             binding.item = item
+            binding.largeListItemImg.load("https://image.tmdb.org/t/p/w500${item.image}") {
+                crossfade(true)
+                crossfade(500)
+                transformations(RoundedCornersTransformation(25f))
+            }
+
+            binding.largeListItemImg.setOnClickListener {
+                val context = binding.largeListItemImg.context
+                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.container, MovieDetailFragment.newInstance(item.identifier))
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
         }
     }
 

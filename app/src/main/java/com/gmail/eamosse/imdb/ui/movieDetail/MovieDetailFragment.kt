@@ -12,24 +12,47 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.gmail.eamosse.imdb.R
+import com.gmail.eamosse.imdb.ui.home.HomeViewModel
 
 class MovieDetailFragment : Fragment() {
 
-    //TODO: Ajouter le ViewModel
+    private val homeViewModel: HomeViewModel by viewModels()
+    private var movieId: Int = 0
 
-//    private val viewModel: MovieDetailViewModel by viewModels()
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            movieId = it.getInt(ARG_MOVIE_ID)
+        }
+
+        with(homeViewModel) {
+            token.observe(viewLifecycleOwner, Observer {
+                getMovie(movieId)
+            })
+        }
+
+
+    }
+    companion object {
+        private const val ARG_MOVIE_ID = "movie_id"
+
+        fun newInstance(movieId: Int) = MovieDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(ARG_MOVIE_ID, movieId)
+            }
+        }
+    }
+}
+
 //        val movieId = arguments?.getInt("movieId") ?: throw IllegalArgumentException("Missing movieId argument")
 //        viewModel.getMovie(movieId)
 //
@@ -38,7 +61,7 @@ class MovieDetailFragment : Fragment() {
 //            // Example:
 //            // movieTitleTextView.text = movie.title
 //
-//val movieUrl = "X-iEq8hWd6k"
+//    val movieUrl = "X-iEq8hWd6k"
 //    val videoStr = "<iframe width=\"100%\" height=\"auto\" src=\"https://www.youtube.com/embed/${movieUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"encrypted-media; gyroscope; picture-in-picture;\" allowfullscreen></iframe>"
 //
 //    binding.webview.webViewClient = object : WebViewClient() {
@@ -56,5 +79,6 @@ class MovieDetailFragment : Fragment() {
 //            // Handle error
 //        })
 //    }
-}
+//    }
+//}
 

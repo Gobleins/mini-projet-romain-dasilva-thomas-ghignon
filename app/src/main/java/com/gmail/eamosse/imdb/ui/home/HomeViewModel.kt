@@ -1,9 +1,11 @@
 package com.gmail.eamosse.imdb.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gmail.eamosse.idbdata.data.Actor
 import com.gmail.eamosse.idbdata.data.Category
 import com.gmail.eamosse.idbdata.data.Movie
 import com.gmail.eamosse.idbdata.data.Token
@@ -32,6 +34,18 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     private val _movies: MutableLiveData<List<Movie>> = MutableLiveData()
     val movies: LiveData<List<Movie>>
         get() = _movies
+
+    private val _movie: MutableLiveData<Movie> = MutableLiveData()
+    val movie: LiveData<Movie>
+        get() = _movie
+
+    private val _actors: MutableLiveData<List<Actor>> = MutableLiveData()
+    val actors: LiveData<List<Actor>>
+        get() = _actors
+
+//    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
+//    val highlightMovie: LiveData<Movie>
+//        get() = _highlightMovie
 
 
     init {
@@ -65,6 +79,32 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
             when (val result = repository.getPopularMovies()) {
                 is Result.Succes -> {
                     _movies.postValue(result.data)
+                }
+                is Result.Error -> {
+                    _error.postValue(result.message)
+                }
+            }
+        }
+    }
+
+    fun getMovie(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getMovie(id)) {
+                is Result.Succes -> {
+                    _movie.postValue(result.data)
+                }
+                is Result.Error -> {
+                    _error.postValue(result.message)
+                }
+            }
+        }
+    }
+
+    fun getPopularActors() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getPopularActors()) {
+                is Result.Succes -> {
+                    _actors.postValue(result.data)
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)
