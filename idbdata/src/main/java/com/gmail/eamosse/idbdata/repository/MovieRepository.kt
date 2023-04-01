@@ -1,5 +1,6 @@
 package com.gmail.eamosse.idbdata.repository
 
+import android.util.Log
 import com.gmail.eamosse.idbdata.data.*
 import com.gmail.eamosse.idbdata.datasources.LocalDataSource
 import com.gmail.eamosse.idbdata.datasources.OnlineDataSource
@@ -27,6 +28,17 @@ class MovieRepository @Inject internal constructor(
         }
     }
 
+    suspend fun getPopularActors(): Result<List<Actor>> {
+        return when(val result = online.getPopularActors()) {
+            is Result.Succes -> {
+                val actors = result.data
+                //local.saveActor(actors)
+                Result.Succes(actors)
+            }
+            is Result.Error -> result
+        }
+    }
+
     suspend fun getCategories(): Result<List<Category>> {
         return when(val result = online.getCategories()) {
             is Result.Succes -> {
@@ -41,9 +53,13 @@ class MovieRepository @Inject internal constructor(
     }
 
     suspend fun getMovie(id: Int): Result<Movie> {
-        return online.getMovie(id).also {
-            if (it is Result.Succes) {
-                local.saveMovie(it.data)
+        return online.getMovie(id).also { onlineMovie ->
+            if (onlineMovie is Result.Succes) {
+                local.getMovie(id).also { localMovie ->
+                    if (localMovie is Result.Error) {
+                        local.saveMovie(onlineMovie.data)
+                    }
+                }
             } else {
                 val movie = local.getMovie(id)
                 if (movie != null) {

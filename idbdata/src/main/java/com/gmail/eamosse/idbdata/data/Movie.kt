@@ -1,6 +1,7 @@
 package com.gmail.eamosse.idbdata.data
 
 import com.gmail.eamosse.idbdata.local.entities.MovieEntity
+import com.gmail.eamosse.idbdata.utils.ItemList
 
 
 data class Movie(
@@ -12,11 +13,18 @@ data class Movie(
     val poster_path: String?,
     val backdrop_path: String?,
     var category: List<Category> = listOf(),
-    val release_date: String,
+    val release_date: String?,
     val vote_average: Double,
     val overview: String,
     var actors: List<Actor> = listOf()
-)
+): ItemList {
+    override val identifier: Int
+        get() = id
+    override val name: String
+        get() = title
+    override val image: String
+        get() = poster_path ?: ""
+}
 
 internal fun Movie.toEntity() = MovieEntity(
     id = this.id,
@@ -26,7 +34,7 @@ internal fun Movie.toEntity() = MovieEntity(
     popularity = this.popularity,
     poster_path = this.poster_path ?: "",
     backdrop_path = this.backdrop_path ?: "",
-    release_date = this.release_date,
+    release_date = this.release_date ?: "",
     vote_average = this.vote_average,
     overview = this.overview
 )

@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/navigation_home_second" />
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_home_second"
@@ -41,9 +41,18 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:name="com.gmail.eamosse.imdb.ui.profile.DetailFragment"-->
+<!--        android:label="@string/title_profile"-->
+<!--        tools:layout="@layout/fragment_profile" />-->
+
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.gmail.eamosse.imdb.ui.profile.DetailFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment"
+        android:label="MovieDetailsFragment" >
+        <argument
+            android:name="myId"
+            app:argType="string" />
+    </fragment>
 </navigation>

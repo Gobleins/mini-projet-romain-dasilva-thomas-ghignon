@@ -1,5 +1,6 @@
 package com.gmail.eamosse.idbdata.utils
-
-public interface ItemList {
+interface ItemList {
+    val identifier: Int
     val name: String
+    val image: String
 }
