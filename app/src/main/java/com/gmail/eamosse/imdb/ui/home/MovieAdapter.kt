@@ -12,7 +12,7 @@ import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.LargeListItemBinding
 import com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment
 
-class MovieAdapter(private val items: List<Movie>) :
+class MovieAdapter(private val items: List<Movie>, private val OnMovieClick: (ItemList) -> Unit) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: LargeListItemBinding) :
@@ -24,14 +24,8 @@ class MovieAdapter(private val items: List<Movie>) :
                 crossfade(500)
                 transformations(RoundedCornersTransformation(25f))
             }
-
-            binding.largeListItemImg.setOnClickListener {
-                val context = binding.largeListItemImg.context
-                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.container, MovieDetailFragment.newInstance(item.identifier))
-                transaction.addToBackStack(null)
-                transaction.commit()
+            binding.root.setOnClickListener {
+                OnMovieClick(item)
             }
         }
     }

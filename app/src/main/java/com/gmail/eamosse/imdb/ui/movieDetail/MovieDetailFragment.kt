@@ -11,45 +11,38 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.gmail.eamosse.imdb.R
+import com.gmail.eamosse.imdb.databinding.FragmentMovieDetailBinding
 import com.gmail.eamosse.imdb.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by viewModels()
-    private var movieId: Int = 0
+    private val args: MovieDetailFragmentArgs by navArgs()
+    private val viewModel: MovieDetailViewModel by viewModels()
+    private lateinit var binding: FragmentMovieDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return inflater.inflate(R.layout.fragment_movie_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            movieId = it.getInt(ARG_MOVIE_ID)
-        }
-
-        with(homeViewModel) {
-            token.observe(viewLifecycleOwner, Observer {
-                getMovie(movieId)
+        with(viewModel) {
+            viewModel.getDetailMovie(args.myId.toInt())
+            movie.observe(viewLifecycleOwner, Observer {
+                binding.movie = it
             })
         }
 
-
-    }
-    companion object {
-        private const val ARG_MOVIE_ID = "movie_id"
-
-        fun newInstance(movieId: Int) = MovieDetailFragment().apply {
-            arguments = Bundle().apply {
-                putInt(ARG_MOVIE_ID, movieId)
-            }
-        }
     }
 }
 
