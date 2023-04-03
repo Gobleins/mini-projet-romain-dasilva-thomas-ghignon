@@ -27,6 +27,7 @@ class MovieDetailViewModel @Inject constructor(
 
 
     fun getDetailMovie(id: Int) {
+
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repository.getMovie(id)) {
                 is Result.Succes -> {
