@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.gmail.eamosse.idbdata.data.Category
+import com.gmail.eamosse.idbdata.utils.ItemList
 import com.gmail.eamosse.imdb.databinding.CategoryListItemBinding
 
-class CategoryAdapter(private val items: List<Category>) :
+class CategoryAdapter(private val items: List<Category>, private val OnCategoryClick: (Category) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: CategoryListItemBinding) :
@@ -20,6 +21,9 @@ class CategoryAdapter(private val items: List<Category>) :
 //                crossfade(500)
 //                transformations(RoundedCornersTransformation(25f))
 //            }
+            binding.root.setOnClickListener {
+                OnCategoryClick(item)
+            }
         }
     }
 

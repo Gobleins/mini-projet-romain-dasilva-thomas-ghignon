@@ -53,12 +53,16 @@ class HomeFragment : Fragment() {
                 getPopularActors()
             })
 
-            categories.observe(viewLifecycleOwner, Observer {
-                binding.categoryList.adapter = CategoryAdapter(it)
+            categories.observe(viewLifecycleOwner, Observer { categories ->
+                binding.categoryList.adapter = CategoryAdapter(categories) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToListingFragment(it)
+                    )
+                }
             })
 
-            movies.observe(viewLifecycleOwner, Observer {
-                binding.homeMoviesList.adapter = MovieAdapter(it) {
+            movies.observe(viewLifecycleOwner, Observer { movies ->
+                binding.homeMoviesList.adapter = MovieAdapter(movies) {
                     findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(
                             it.identifier.toString()
