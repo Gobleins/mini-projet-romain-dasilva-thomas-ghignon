@@ -1,6 +1,7 @@
 package com.gmail.eamosse.imdb.ui.listing
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +34,16 @@ class ListingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(viewModel) {
-            viewModel.getMoviesByCategory(args.category)
-            movies.observe(viewLifecycleOwner, Observer { movie ->
-                binding.listingRecyclerview.adapter = MovieAdapter(movie) {
-                    findNavController().navigate(
-                        ListingFragmentDirections.actionListingFragmentToMovieDetailFragment(it.identifier.toString())
-                    )
-                }
+            viewModel.getCategory(args.category.toInt())
+            category.observe(viewLifecycleOwner, Observer { category ->
+                viewModel.getMoviesByCategory(category)
+                movies.observe(viewLifecycleOwner, Observer { movie ->
+                    binding.listingRecyclerview.adapter = MovieAdapter(movie) {
+                        findNavController().navigate(
+                            ListingFragmentDirections.actionListingFragmentToMovieDetailFragment(it.identifier.toString())
+                        )
+                    }
+                })
             })
         }
     }

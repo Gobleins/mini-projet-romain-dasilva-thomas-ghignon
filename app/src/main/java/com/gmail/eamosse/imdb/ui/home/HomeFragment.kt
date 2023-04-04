@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
             categories.observe(viewLifecycleOwner, Observer { categories ->
                 binding.categoryList.adapter = CategoryAdapter(categories) {
                     findNavController().navigate(
-                        HomeFragmentDirections.actionHomeFragmentToListingFragment(it)
+                        HomeFragmentDirections.actionHomeFragmentToListingFragment(it.id.toString())
                     )
                 }
             })
@@ -64,9 +65,7 @@ class HomeFragment : Fragment() {
             movies.observe(viewLifecycleOwner, Observer { movies ->
                 binding.homeMoviesList.adapter = MovieAdapter(movies) {
                     findNavController().navigate(
-                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(
-                            it.identifier.toString()
-                        )
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(it.identifier.toString())
                     )
                 }
             })
