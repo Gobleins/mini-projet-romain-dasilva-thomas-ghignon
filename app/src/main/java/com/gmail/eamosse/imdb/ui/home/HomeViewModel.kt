@@ -35,6 +35,10 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     val movies: LiveData<List<Movie>>
         get() = _movies
 
+//    private val _series: MutableLiveData<List<Movie>> = MutableLiveData()
+//    val series: LiveData<List<Movie>>
+//        get() = _series
+
     private val _movie: MutableLiveData<Movie> = MutableLiveData()
     val movie: LiveData<Movie>
         get() = _movie

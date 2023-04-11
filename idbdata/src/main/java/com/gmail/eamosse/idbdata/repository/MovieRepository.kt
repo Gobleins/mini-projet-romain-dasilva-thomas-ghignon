@@ -52,6 +52,15 @@ class MovieRepository @Inject internal constructor(
         }
     }
 
+    suspend fun getCategory(id: Int): Result<Category> {
+        //TODO: récupérer la catégorie online
+        return local.getCategory(id).also { localCategory ->
+            if (localCategory is Result.Error) {
+                //TODO: save la catégorie online
+            }
+        }
+    }
+
     suspend fun getMovie(id: Int): Result<Movie> {
         return online.getMovie(id).also { onlineMovie ->
             if (onlineMovie is Result.Succes) {

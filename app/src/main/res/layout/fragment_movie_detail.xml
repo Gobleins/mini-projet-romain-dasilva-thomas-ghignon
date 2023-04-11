@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="movie" type="com.gmail.eamosse.idbdata.data.Movie" />
+
+        <variable
+            name="item"
+            type="com.gmail.eamosse.idbdata.data.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
-
+        tools:context=".ui.movieDetail.movieDetailFragment">
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,95 +32,117 @@
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"/>
+                    android:background="#000000"
+                    android:backgroundTint="#000000"
+                    android:minHeight="200dp"
+                    android:padding="30dp">
 
-                <RelativeLayout
+                </WebView>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
                     <TextView
-                        android:id="@+id/h2_movie_detail"
-                        android:layout_width="318dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentTop="true"
+                        android:id="@+id/movie_detail_overview_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/roboto_medium"
-                        android:text="@{movie.title}"
+                        android:text="@{item.title}"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
+                        android:textSize="25sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
-                        android:id="@+id/h2_movie_detail_popularity"
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="22dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/movie_detail_actorList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@+id/h2_movie_detail"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@{movie.title}"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/h2_movie_detail" />
-                </RelativeLayout>
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:spanCount="1"
+                        tools:listitem="@layout/category_list_item" />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
+                        <TextView
+                            android:id="@+id/movie_detail_overview_title2"
+                            android:layout_width="318dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Détails"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/movie_detail_labelList"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:spanCount="1"
-                    tools:listitem="@layout/category_list_item">
-                </androidx.recyclerview.widget.RecyclerView>
+                        <TextView
+                            android:id="@+id/h2_movie_detail_popularity"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toEndOf="@+id/movie_detail_overview_title2"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="test"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/movie_detail_overview_title2" />
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/movie_detail_overview_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="@{movie.title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/movie_detail_labelList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:spanCount="1"
+                        tools:listitem="@layout/category_list_item" />
 
-                <TextView
-                    android:id="@+id/movie_detail_overview_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="@{movie.title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/movie_detail_overview_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{item.overview}"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/movie_detail_actorList"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:spanCount="1"
-                    tools:listitem="@layout/category_list_item">
-                </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/detail_actor_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="1"
+                        tools:listitem="@layout/category_list_item"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
         </ScrollView>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

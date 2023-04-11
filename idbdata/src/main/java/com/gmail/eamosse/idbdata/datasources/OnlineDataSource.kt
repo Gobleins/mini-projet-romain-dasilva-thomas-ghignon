@@ -76,6 +76,15 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
         }
     }
 
+    /** Récupérer une catégorie
+     * @return [Result<Category>]
+     * Si [Result.Succes], tout s'est bien passé
+     * Sinon, une erreur est survenue
+     */
+    override suspend fun getCategory(id: Int): Result<Category> {
+        TODO("Not yet implemented")
+    }
+
     /** Récupérer un film
      * @param id l'identifiant du film
      * @return [Result<Movie>]

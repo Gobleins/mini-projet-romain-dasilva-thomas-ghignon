@@ -12,8 +12,12 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/movieDetailsFragment" />
+            android:id="@+id/action_HomeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+
+        <action
+            android:id="@+id/action_HomeFragment_to_listingFragment"
+            app:destination="@id/listingFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_home_second"
@@ -41,18 +45,26 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_profile"-->
-<!--        android:name="com.gmail.eamosse.imdb.ui.profile.DetailFragment"-->
-<!--        android:label="@string/title_profile"-->
-<!--        tools:layout="@layout/fragment_profile" />-->
-
     <fragment
-        android:id="@+id/movieDetailsFragment"
+        android:id="@+id/movieDetailFragment"
         android:name="com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment"
-        android:label="MovieDetailsFragment" >
+        android:label="MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
         <argument
             android:name="myId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listingFragment"
+        android:name="com.gmail.eamosse.imdb.ui.listing.ListingFragment"
+        android:label="Listing"
+        tools:layout="@layout/fragment_listing">
+        <action
+            android:id="@+id/action_listingFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <argument
+            android:name="category"
             app:argType="string" />
     </fragment>
 </navigation>

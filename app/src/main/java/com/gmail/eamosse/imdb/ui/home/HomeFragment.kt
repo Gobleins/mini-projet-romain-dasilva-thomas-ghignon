@@ -12,7 +12,6 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.renderscript.Allocation
@@ -47,6 +46,7 @@ class HomeFragment : Fragment() {
 
 
         with(homeViewModel) {
+
             token.observe(viewLifecycleOwner, Observer {
                 //récupérer les catégories$
                 getPopularMovies()
@@ -54,16 +54,18 @@ class HomeFragment : Fragment() {
                 getPopularActors()
             })
 
-            categories.observe(viewLifecycleOwner, Observer {
-                binding.categoryList.adapter = CategoryAdapter(it)
+            categories.observe(viewLifecycleOwner, Observer { categories ->
+                binding.categoryList.adapter = CategoryAdapter(categories) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToListingFragment(it.id.toString())
+                    )
+                }
             })
 
-            movies.observe(viewLifecycleOwner, Observer {
-                binding.homeMoviesList.adapter = MovieAdapter(it) {
+            movies.observe(viewLifecycleOwner, Observer { movies ->
+                binding.homeMoviesList.adapter = MovieAdapter(movies) {
                     findNavController().navigate(
-                        HomeFragmentDirections.actionHomeFragmentToHomeSecondFragment(
-                            it.identifier.toString()
-                        )
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(it.identifier.toString())
                     )
                 }
             })

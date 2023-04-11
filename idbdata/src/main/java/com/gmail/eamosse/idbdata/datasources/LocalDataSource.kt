@@ -64,6 +64,24 @@ internal class LocalDataSource @Inject constructor(
     }
 
     /**
+     * Récupère une catégorie enregistrée en local
+     * @return [Result<Category>]
+     * Si [Result.Succes], tout s'est bien passé
+     * Sinon, une erreur est survenue
+     */
+    override suspend fun getCategory(id: Int): Result<Category> = withContext(Dispatchers.IO) {
+        safeCall {
+            categoryDao.getCategory(id)?.let {
+                Result.Succes(it.toCategory())
+            } ?: Result.Error(
+                exception = Exception(),
+                message = "Category not found",
+                code = -1
+            )
+        }
+    }
+
+    /**
      * Récupère un film enregistré en local
      * @param id l'identifiant du film
      * @return [Result<Movie>]
