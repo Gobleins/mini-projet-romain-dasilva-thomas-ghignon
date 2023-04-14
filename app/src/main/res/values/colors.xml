@@ -5,4 +5,6 @@
     <color name="colorTransparent">#E91E63</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#474747</color>
+    <color name="transparent">#00000000</color>
 </resources>

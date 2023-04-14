@@ -5,15 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.FragmentMovieDetailBinding
 import com.gmail.eamosse.imdb.ui.home.ActorAdapter
+import com.gmail.eamosse.imdb.ui.home.CategoryAdapter
+import com.gmail.eamosse.imdb.utils.FadingImageView
+import com.gmail.eamosse.imdb.utils.FirstItemMarginDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,32 +47,54 @@ class MovieDetailFragment : Fragment() {
                 Observer {
 
                     binding.item = it
-                    Log.d("TAG", "onViewCreated: ${it.actors}")
                     binding.detailActorList.adapter = ActorAdapter(it.actors)
+                    binding.detailCategoryList.adapter = CategoryAdapter(it.category, {})
 
-                    binding.webview.webViewClient = object : WebViewClient() {
-                        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                            return false
-                        }
+                    val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
+                    fadeImage.load("https://image.tmdb.org/t/p/w500${it.backdrop_path}") {
+                        crossfade(true)
+                        crossfade(500)
+                        transformations(RoundedCornersTransformation(25f))
                     }
-                    val ws: WebSettings = binding.webview.settings
-                    ws.javaScriptEnabled = true
+                    fadeImage.setEdgeLength(100)
+                    fadeImage.setFadeBottom(true)
 
-                    Log.d("TAG", "onViewCreated: ${it.video}")
+                    val tag_date = view.findViewById<TextView>(R.id.detail_tag_release_date)
+                    val tag_vote = view.findViewById<TextView>(R.id.detail_tag_vote_average)
+                    val tag_popularity = view.findViewById<TextView>(R.id.detail_tag_popularity)
 
-                    val movieUrl = "Y5hcd7-5EmM"
-                    if (true) {
-                        val videoStr = "<html><body style=\"margin:0;padding:0; position: relative; padding-bottom: 56.25%; background-color: black\" style='margin:0;padding:0;'><iframe style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" src=\"https://www.youtube.com/embed/${movieUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"encrypted-media; gyroscope; picture-in-picture;\" allowfullscreen></iframe></body></html>"
-                        binding.webview.loadData(videoStr, "text/html", "utf-8")
-                    } else {
-                        binding.webview.visibility = View.GONE
-                    }
+                    tag_date.text = " " + it.release_date.toString()
+                    tag_vote.text = " " + it.vote_average.toString() + "/10"
+                    tag_popularity.text = " " + it.popularity.toString() + " votes"
+
+//                    binding.webview.webViewClient = object : WebViewClient() {
+//                        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+//                            return false
+//                        }
+//                    }
+//                    val ws: WebSettings = binding.webview.settings
+//                    ws.javaScriptEnabled = true
+//
+//                    Log.d("TAG", "onViewCreated: ${it}")
+//
+//                    val movieUrl = "Y5hcd7-5EmM"
+//                    if (true) {
+//                        val videoStr = "<html><body style=\"margin:0;padding:0; position: relative; padding-bottom: 56.25%; background-color: black\" style='margin:0;padding:0;'><iframe style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" src=\"https://www.youtube.com/embed/${movieUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"encrypted-media; gyroscope; picture-in-picture;\" allowfullscreen></iframe></body></html>"
+//                        binding.webview.loadData(videoStr, "text/html", "utf-8")
+//                    } else {
+//                        binding.webview.visibility = View.GONE
+//                    }
 
                     viewModel.error.observe(viewLifecycleOwner, Observer {
                         // Handle error
                     })
                 })
         }
+
+        val recyclerViewActor = view.findViewById<RecyclerView>(R.id.detail_actor_list)
+        val recyclerViewCategory = view.findViewById<RecyclerView>(R.id.detail_category_list)
+        recyclerViewActor.addItemDecoration(FirstItemMarginDecoration(resources.getDimensionPixelSize(R.dimen.my_margin_size_detail)))
+        recyclerViewCategory.addItemDecoration(FirstItemMarginDecoration(resources.getDimensionPixelSize(R.dimen.my_margin_size_detail)))
     }
 }
 
