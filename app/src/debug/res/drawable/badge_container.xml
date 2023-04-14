@@ -1,0 +1,17 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Définir la couleur de fond transparent -->
+    <solid android:color="@android:color/transparent" />
+
+    <corners
+        android:bottomLeftRadius="30dp"
+        android:bottomRightRadius="30dp"
+        android:radius="60dp"
+        android:topLeftRadius="30dp"
+        android:topRightRadius="30dp" />
+
+    <!-- Définir une bordure si nécessaire -->
+    <stroke android:width="2dp" android:color="@color/colorAccent" />
+
+</shape>
