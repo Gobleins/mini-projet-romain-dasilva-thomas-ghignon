@@ -101,6 +101,26 @@ internal class LocalDataSource @Inject constructor(
 
     }
 
+    /**
+     * Récupère un film enregistré en local
+     * @param id l'identifiant du film
+     * @return [Result<Movie>]
+     * Si [Result.Succes], tout s'est bien passé
+     * Sinon, une erreur est survenue
+     */
+    override suspend fun getHighlightMovie(): Result<Movie> = withContext(Dispatchers.IO) {
+        safeCall {
+            movieDao.getLastMovie()?.let {
+                Result.Succes(it.toMovie())
+            } ?: Result.Error(
+                exception = Exception(),
+                message = "Movie not found",
+                code = -1
+            )
+        }
+
+    }
+
     override suspend fun getMovieActors(id: Int): Result<List<Actor>> {
         TODO("Not yet implemented")
     }

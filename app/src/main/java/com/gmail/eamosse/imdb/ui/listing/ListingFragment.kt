@@ -42,7 +42,7 @@ class ListingFragment : Fragment() {
             category.observe(viewLifecycleOwner, Observer { category ->
                 viewModel.getMoviesByCategory(category)
                 movies.observe(viewLifecycleOwner, Observer { movie ->
-                    binding.listingRecyclerview.adapter = MovieAdapter(movie) {
+                    binding.listingRecyclerview.adapter = ListingAdapter(movie) {
                         findNavController().navigate(
                             ListingFragmentDirections.actionListingFragmentToMovieDetailFragment(it.identifier.toString())
                         )

@@ -15,17 +15,10 @@
         android:layout_height="match_parent"
         tools:context=".ui.movieDetail.movieDetailFragment">
 
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/listing_title_placeholder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:visibility="invisible"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listing_recyclerview"
@@ -37,8 +30,32 @@
                 app:spanCount="2"
                 tools:itemCount="16"
                 tools:listitem="@layout/large_vertical_list_item" />
+        </LinearLayout>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <FrameLayout-->
+<!--                android:id="@+id/listing_title_placeholder"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="top"-->
+<!--                android:visibility="invisible"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/listing_recyclerview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:contentDescription="@string/listing"-->
+<!--                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+<!--                app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--                app:spanCount="2"-->
+<!--                tools:itemCount="16"-->
+<!--                tools:listitem="@layout/large_vertical_list_item" />-->
+
+<!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 
 
@@ -76,7 +93,6 @@
 <!--                tools:listitem="@layout/large_list_item" />-->
 
 <!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

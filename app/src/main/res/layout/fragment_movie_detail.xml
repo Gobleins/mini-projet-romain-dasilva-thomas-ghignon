@@ -26,17 +26,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <!--                <WebView-->
-<!--                    android:id="@+id/webview"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="#000000"-->
-<!--                    android:backgroundTint="#000000"-->
-<!--                    android:minHeight="200dp"-->
-<!--                    android:padding="30dp">-->
-
-<!--                </WebView>-->
-
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
@@ -51,8 +40,17 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:scaleX="1.5"
-                        android:scaleY="1.5"
-                        android:src="@mipmap/ic_avatar_foreground" />
+                        android:scaleY="1.5" />
+
+<!--                    <WebView-->
+<!--                        android:id="@+id/detail_video"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="#000000"-->
+<!--                        android:backgroundTint="#000000"-->
+<!--                        android:padding="30dp">-->
+
+<!--                    </WebView>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"

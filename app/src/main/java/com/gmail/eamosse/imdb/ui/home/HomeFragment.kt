@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,7 @@ class HomeFragment : Fragment() {
                 getPopularMovies()
                 getCategories()
                 getPopularActors()
+                getHighlightMovie()
             })
 
             categories.observe(viewLifecycleOwner, Observer { categories ->
@@ -70,39 +72,32 @@ class HomeFragment : Fragment() {
             })
 
             actors.observe(viewLifecycleOwner, Observer {
-                binding.homeActorList.adapter = ActorAdapter(it)
+                binding.homeActorList.adapter = ActorAdapter(it) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToActorDetailFragment(it.identifier.toString())
+                    )
+                }
+            })
+
+            highlightMovie.observe(viewLifecycleOwner, Observer { movie ->
+                Log.d("TAG", "highlightMovie inside homeFragment: $movie")
+                binding.homeHeaderImage.load("https://image.tmdb.org/t/p/w500${movie.poster_path}") {
+                    crossfade(true)
+                    crossfade(500)
+                    transformations(RoundedCornersTransformation(35f))
+                }
+
+                binding.homeHeaderImage.setOnClickListener {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(movie.identifier.toString())
+                    )
+                }
             })
 
             error.observe(viewLifecycleOwner, Observer {
                 //afficher l'erreur
             })
         }
-
-        val highlightMovie = view.findViewById<ImageView>(R.id.home_header_image)
-        highlightMovie.load(R.mipmap.ic_avatar_foreground) {
-            crossfade(true)
-            crossfade(500)
-            transformations(RoundedCornersTransformation(35f))
-        }
-
-//        val headerBackgroundImage = view.findViewById<ImageView>(R.id.header_blur_background)
-//        headerBackgroundImage.load(R.mipmap.ic_avatar_foreground) {
-//            transformations(
-//                BlurTransformation(this@MainActivity,radius = 8f),
-//            )
-//            build()
-//        }
-
-
-
-
-
-
-        val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
-        val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 10)
-        fadeImage.setImageBitmap(blurredBitmap)
-        fadeImage.setEdgeLength(100)
-        fadeImage.setFadeBottom(true)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.category_list)
         val recyclerViewMovies = view.findViewById<RecyclerView>(R.id.home_movies_list)

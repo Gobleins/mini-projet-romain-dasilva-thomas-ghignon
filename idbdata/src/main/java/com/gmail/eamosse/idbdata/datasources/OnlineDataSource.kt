@@ -117,6 +117,11 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
             }
         }
     }
+
+    override suspend fun getHighlightMovie(): Result<Movie> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getMovieActors(id: Int): Result<List<Actor>> {
         TODO("Not yet implemented")
     }

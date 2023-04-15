@@ -47,9 +47,9 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     val actors: LiveData<List<Actor>>
         get() = _actors
 
-//    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
-//    val highlightMovie: LiveData<Movie>
-//        get() = _highlightMovie
+    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
+    val highlightMovie: LiveData<Movie>
+        get() = _highlightMovie
 
 
     init {
@@ -91,11 +91,11 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
         }
     }
 
-    fun getMovie(id: Int) {
+    fun getHighlightMovie() {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.getMovie(id)) {
+            when (val result = repository.getHighlightMovie()) {
                 is Result.Succes -> {
-                    _movie.postValue(result.data)
+                    _highlightMovie.postValue(result.data)
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)

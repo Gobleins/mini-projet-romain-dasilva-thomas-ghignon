@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -47,7 +50,7 @@ class MovieDetailFragment : Fragment() {
                 Observer {
 
                     binding.item = it
-                    binding.detailActorList.adapter = ActorAdapter(it.actors)
+                    binding.detailActorList.adapter = ActorAdapter(it.actors, {})
                     binding.detailCategoryList.adapter = CategoryAdapter(it.category, {})
 
                     val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
@@ -67,22 +70,23 @@ class MovieDetailFragment : Fragment() {
                     tag_vote.text = " " + it.vote_average.toString() + "/10"
                     tag_popularity.text = " " + it.popularity.toString() + " votes"
 
-//                    binding.webview.webViewClient = object : WebViewClient() {
+
+
+//                    binding.detailVideo.webViewClient = object : WebViewClient() {
 //                        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
 //                            return false
 //                        }
 //                    }
-//                    val ws: WebSettings = binding.webview.settings
+//                    val ws: WebSettings = binding.detailVideo.settings
 //                    ws.javaScriptEnabled = true
-//
-//                    Log.d("TAG", "onViewCreated: ${it}")
 //
 //                    val movieUrl = "Y5hcd7-5EmM"
 //                    if (true) {
-//                        val videoStr = "<html><body style=\"margin:0;padding:0; position: relative; padding-bottom: 56.25%; background-color: black\" style='margin:0;padding:0;'><iframe style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" src=\"https://www.youtube.com/embed/${movieUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"encrypted-media; gyroscope; picture-in-picture;\" allowfullscreen></iframe></body></html>"
-//                        binding.webview.loadData(videoStr, "text/html", "utf-8")
+////                        binding.detailVideo.loadUrl("https://www.youtube.com/embed/${it.videos?.results?.firstOrNull()?.key}")
+////                        val videoStr = "<html><body style=\"margin:0;padding:0; position: relative; padding-bottom: 56.25%; background-color: black\" style='margin:0;padding:0;'><iframe style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" src=\"https://www.youtube.com/embed/${movieUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"encrypted-media; gyroscope; picture-in-picture;\" allowfullscreen></iframe></body></html>"
+////                        binding.detailVideo.loadData(videoStr, "text/html", "utf-8")
 //                    } else {
-//                        binding.webview.visibility = View.GONE
+//                        binding.detailVideo.visibility = View.GONE
 //                    }
 
                     viewModel.error.observe(viewLifecycleOwner, Observer {
