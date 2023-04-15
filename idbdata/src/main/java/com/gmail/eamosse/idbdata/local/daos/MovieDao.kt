@@ -35,4 +35,8 @@ internal interface MovieDao {
     @Query("SELECT * FROM movie ORDER BY popularity DESC LIMIT :limit")
     fun getPopularMovies(limit: Int = 10): List<MovieEntity>
 
+    @Query("SELECT * FROM actor INNER JOIN movie_actor_cross_ref ON actor.actor_id = movie_actor_cross_ref.actor_id WHERE movie_actor_cross_ref.movie_id = :movie_id")
+    fun getMovieActors(movie_id: Int): List<ActorEntity>
+
+
 }

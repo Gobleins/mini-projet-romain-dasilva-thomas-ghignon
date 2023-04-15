@@ -5,9 +5,11 @@ import androidx.room.Room
 import com.gmail.eamosse.idbdata.BuildConfig
 import com.gmail.eamosse.idbdata.api.service.MovieService
 import com.gmail.eamosse.idbdata.data.Category
+import com.gmail.eamosse.idbdata.local.daos.*
 import com.gmail.eamosse.idbdata.local.daos.ActorDao
 import com.gmail.eamosse.idbdata.local.daos.CategoryDao
 import com.gmail.eamosse.idbdata.local.daos.MovieDao
+import com.gmail.eamosse.idbdata.local.daos.SerieDao
 import com.gmail.eamosse.idbdata.local.daos.TokenDao
 import com.gmail.eamosse.idbdata.local.databases.IdbDataBase
 import dagger.Module
@@ -44,6 +46,11 @@ object DataModule {
     @Provides
     internal fun provideTokenDao(database: IdbDataBase): TokenDao {
         return database.tokenDao()
+    }
+
+    @Provides
+    internal fun provideSerieDao(database: IdbDataBase): SerieDao {
+        return database.serieDao()
     }
 
     @Provides
