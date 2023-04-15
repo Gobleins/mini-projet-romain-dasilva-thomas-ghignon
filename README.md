@@ -1,64 +1,35 @@
-# The Moovie App
+# Goblix
 
-## Objectifs fonctionnels
-Dans ce projet, vous allez créer l'application AnneFlix (The new Netflix).
-L'objectif est d'exploiter la base de données TheMoovieDB (https://developers.themoviedb.org/3) afin de permettre aux utilisateurs de l'application de visualiser, noter et voir la bande annonce des films et séries disponible sur la base de données.
+## Développeurs
+- Ghignon Thomas
+- Da Silva Romain
 
-## Objectifs techniques
-Techniquement, ce projet devrait vous permettre d'expérimenter de manière plus approfondie les notions telles que:
-- Kotlin
-- Architecture Components
-- Data Binding
-- Retrofit
-- Injection de dépendances
-- Navigation
-- Persistence de données
-- ....
+## Fonctionnalités Développées
+- Afficher Détail Acteur
+- Afficher Liste des acteurs populaire
+- Afficher Liste des categories de films
+  - Afficher les filmes par catégories
+- Afficher les films populaires
+- Afficher le détails d'un film
+- Afficher série par catégories
+- Afficher les séries populaires
+- afficher une série
 
-## Quelques librairies à utiliser
-- Navigation-fragment
-- Hilt : Injection de dépendances
-- Moshi : Sérialisation et Désérialisation JSON
-- Retrofit: Consommer des web services
-- Coil : Pour afficher les images
+## Lien vidéo Youtube
+- https://www.youtube.com/watch?v=Pqoh0gKiu1A
 
-## Fonctionnalités attendues
-### Obligatoires
-Pour être acceptable, votre application doit proposer les fonctionnalités suivantes
-- Catégories de films/séries
-- Liste des films par catégories et auteurs
-- Détails des films et séries
-- Films et séries à la une
-- Visualisation de la bande annonce d'un film ou d'une série
-- Liste de films et séries en favoris (géré dans une base de données locale)
+## Captures d'écran de l'application
 
-### Optionnels
-Pour être complète, votre application doit proposer au moins une parmi les fonctionnalités suivantes :
-- Noter un film, série ou acteur
-- Voir les commentaires d'un film
-- Voir la biographie d'un acteur/personnage
-- Voir la liste des plateformes pour regarder un film
-- Toute autre fonctionnalité intéressante proposée par la plateforme
-- Synchroniser la liste des films/séries favoris sur Firebase
+### Catégories de films/séries
+![339653746_726613209199703_217230210625139095_n.jpg](..%2F..%2F..%2F..%2F..%2FDownloads%2F339653746_726613209199703_217230210625139095_n.jpg)
+### Liste des films par catégories et auteurs
+![339007629_1566150510540632_2038406012434947000_n.jpg](..%2F..%2F..%2F..%2F..%2FDownloads%2F339007629_1566150510540632_2038406012434947000_n.jpg)
+### Détails des films et séries
+![338955910_1178001083596580_944331865577862219_n.jpg](..%2F..%2F..%2F..%2F..%2FDownloads%2F338955910_1178001083596580_944331865577862219_n.jpg)
+### Films et séries à la une
+![339067546_812894027103655_4190728058873631831_n.jpg](..%2F..%2F..%2F..%2F..%2FDownloads%2F339067546_812894027103655_4190728058873631831_n.jpg)
+### Voir la biographie d'un acteur/personnage
+![339072739_178679878386411_9040332170382755119_n.jpg](..%2F..%2F..%2F..%2F..%2FDownloads%2F339072739_178679878386411_9040332170382755119_n.jpg)
 
 
-## Organisation
-- Groupes de 2 personnes
 
-## Critères d'acceptance
-- Il n'y a pas de notes de groupes, les commits doivent me permettre d'identifier le travail de chaque membre du groupe.
-- Utiliser obligatoirement une branche par fonctionnalité + pull request pour merger sur la branche principale.
-
-## Rendu
-- Date limite : 15 Avril 2023 (avant minuit)
-- Modalités de rendu : Assurez-vous d'effectuer le dernier commit avant la date limite
-- Remplacer le contenu de ce fichier par :
-  - La liste des fonctionnalités développées + captures d'écran de chaque fonctionnalité
-  - Les noms et prénoms des membres du groupe
-  - Captures d'écrans des principales vues
-  - Lien vers une vidéo de démonstration de l'application (sur Youtube)
-
-
-## Vous ne savez pas par où commencer ?
-Comme je suis sympa, je vous file un petit coup de main pour afficher les catégories de films.
-Les étapes sont décrites [ici](https://github.com/eamosse/the-movie-app/blob/master/home_tuto.md)
