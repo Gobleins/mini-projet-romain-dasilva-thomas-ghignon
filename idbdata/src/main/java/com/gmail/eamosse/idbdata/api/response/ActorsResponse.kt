@@ -19,7 +19,9 @@ data class ActorResponse(
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("profile_path")
-    val profile_path: String?
+    val profile_path: String?,
+    @SerializedName("biography")
+    val biography: String
 )
 {
     internal fun toActor() = Actor(
@@ -27,7 +29,8 @@ data class ActorResponse(
         imdb_id = this.imdb_id ?: "",
         name = this.name,
         popularity = this.popularity,
-        profile_path = this.profile_path ?: ""
+        profile_path = this.profile_path ?: "",
+        biography = this.biography
     )
 
     internal fun toEntity() = ActorEntity(
@@ -35,7 +38,8 @@ data class ActorResponse(
         imdb_id = this.imdb_id ?: "",
         name = this.name,
         popularity = this.popularity,
-        profile_path = this.profile_path ?: ""
+        profile_path = this.profile_path ?: "",
+        biography = this.biography
     )
 }
 

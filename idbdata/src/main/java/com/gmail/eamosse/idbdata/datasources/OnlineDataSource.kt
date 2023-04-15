@@ -4,10 +4,7 @@ import com.gmail.eamosse.idbdata.api.parse
 import com.gmail.eamosse.idbdata.api.response.toToken
 import com.gmail.eamosse.idbdata.api.safeCall
 import com.gmail.eamosse.idbdata.api.service.MovieService
-import com.gmail.eamosse.idbdata.data.Actor
-import com.gmail.eamosse.idbdata.data.Category
-import com.gmail.eamosse.idbdata.data.Movie
-import com.gmail.eamosse.idbdata.data.Token
+import com.gmail.eamosse.idbdata.data.*
 import com.gmail.eamosse.idbdata.utils.Result
 import javax.inject.Inject
 
@@ -161,6 +158,87 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
         }
     }
 
+    override suspend fun getSerie(id: Int): Result<Serie> {
+        return safeCall {
+            val response = service.getSerie(id)
+            val actorsParse = service.getSerieActors(id).parse()
+
+            when (val responseParse = response.parse()) {
+                is Result.Succes -> safeCall {
+                    when (actorsParse) {
+                        is Result.Succes -> safeCall {
+                            val actors = actorsParse.data.credits.map {
+                                it.toActor()
+                            }
+                            val serie = responseParse.data.toSerie()
+                            serie.actors = actors
+
+                            Result.Succes(serie)
+                        }
+                        is Result.Error -> actorsParse
+                    }
+
+                }
+                is Result.Error -> responseParse
+            }
+        }
+    }
+
+    override suspend fun getPopularSeries(limit: Int): Result<List<Serie>> {
+        return safeCall {
+            val response = service.getPopularSeries()
+
+            when (val res = response.parse()) {
+                is Result.Succes -> Result.Succes(res.data.series.map {
+                    it.toSerie()
+                })
+                is Result.Error -> res
+            }
+        }
+    }
+
+    override suspend fun getSeriesByCategory(category: Category, limit: Int): Result<List<Serie>> {
+        return safeCall {
+            val response = service.getSeriesByCategory(category.id)
+
+            when (val res = response.parse()) {
+                is Result.Succes -> {
+                    Result.Succes(res.data.series.map {
+                        it.toSerie()
+                    })
+                }
+                is Result.Error -> res
+            }
+        }
+    }
+
+    override suspend fun getSeason(tvId: Int, seasonNumber: Int): Result<Season> {
+        return safeCall {
+            val response = service.getSeason(tvId, seasonNumber)
+
+                when (val res = response.parse()) {
+                    is Result.Succes -> Result.Succes(res.data.toSeason())
+                    is Result.Error -> res
+                }
+        }
+    }
+
+    override suspend fun getEpisode(
+        tvId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): Result<Episode> {
+        return safeCall {
+            val response = service.getEpisode(tvId, seasonNumber, episodeNumber)
+
+            when (val res = response.parse()) {
+                is Result.Succes -> Result.Succes(res.data.toEpisode())
+                is Result.Error -> res
+            }
+        }
+    }
+
+
     /**
      * Récupérer le token du serveur
      * @return [Result<Token>]
@@ -182,35 +260,59 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
      *  Cette fonction n'est pas implémentée car on ne peut pas sauvegarder un acteur sur le serveur
      */
     override suspend fun saveActor(actor: Actor) {
-        TODO("Not yet implemented")
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder un acteur sur le serveur
     }
 
     /**
      *  Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les catégories sur le serveur
      */
     override suspend fun saveCategories(categories: List<Category>) {
-        TODO("I don't know how to save categories, the local datasource probably does")
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les catégories sur le serveur
     }
 
     /**
      *  Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les films sur le serveur
      */
     override suspend fun saveMovie(movie: Movie) {
-        TODO("Not yet implemented")
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les films sur le serveur
     }
 
     /**
      *  Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les films sur le serveur
      */
     override suspend fun saveMovies(movies: List<Movie>) {
-        TODO("Not yet implemented")
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les films sur le serveur
+    }
+
+    override suspend fun saveSerie(serie: Serie) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les séries sur le serveur
+    }
+
+    override suspend fun saveSeries(series: List<Serie>) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les séries sur le serveur
+    }
+
+    override suspend fun saveSeason(season: Season) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les saisons sur le serveur
+    }
+
+    override suspend fun saveSeasons(seasons: List<Season>) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les saisons sur le serveur
+    }
+
+    override suspend fun saveEpisode(episode: Episode) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les épisodes sur le serveur
+    }
+
+    override suspend fun saveEpisodes(episodes: List<Episode>) {
+        // Cette fonction n'est pas implémentée car on ne peut pas sauvegarder les épisodes sur le serveur
     }
 
     /**
      *  Cette fonction n'est pas implémentée car le token est récupéré depuis le serveur
      */
     override suspend fun saveToken(token: Token) {
-        TODO("I don't know how to save a token, the local datasource probably does")
+        // Cette fonction n'est pas implémentée car le token est récupéré depuis le serveur
     }
 
 }

@@ -14,7 +14,8 @@ internal data class ActorEntity(
     val imdb_id: String?,
     val name: String,
     val popularity: Double,
-    val profile_path: String?
+    val profile_path: String?,
+    val biography: String
 )
 
 internal fun ActorEntity.toActor(): Actor {
@@ -23,7 +24,8 @@ internal fun ActorEntity.toActor(): Actor {
         imdb_id = this.imdb_id ?: "",
         name = this.name,
         popularity = this.popularity,
-        profile_path = this.profile_path ?: ""
+        profile_path = this.profile_path ?: "",
+        biography = this.biography
     )
 }
 
@@ -44,6 +46,7 @@ internal fun ActorWithMovies.toActor(): Actor {
         name = actor.name,
         popularity = actor.popularity,
         profile_path = actor.profile_path ?: "",
+        biography = actor.biography,
         movies = this.movies.map{
             it.toMovie()
         }
