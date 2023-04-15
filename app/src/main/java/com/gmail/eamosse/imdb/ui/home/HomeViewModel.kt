@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gmail.eamosse.idbdata.data.Actor
-import com.gmail.eamosse.idbdata.data.Category
-import com.gmail.eamosse.idbdata.data.Movie
-import com.gmail.eamosse.idbdata.data.Token
+import com.gmail.eamosse.idbdata.data.*
 import com.gmail.eamosse.idbdata.repository.Repository
 import com.gmail.eamosse.idbdata.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,9 +31,9 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
     val movies: LiveData<List<Movie>>
         get() = _movies
 
-//    private val _series: MutableLiveData<List<Movie>> = MutableLiveData()
-//    val series: LiveData<List<Movie>>
-//        get() = _series
+    private val _series: MutableLiveData<List<Serie>> = MutableLiveData()
+    val series: LiveData<List<Serie>>
+        get() = _series
 
     private val _movie: MutableLiveData<Movie> = MutableLiveData()
     val movie: LiveData<Movie>
@@ -46,9 +43,9 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
     val actors: LiveData<List<Actor>>
         get() = _actors
 
-//    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
-//    val highlightMovie: LiveData<Movie>
-//        get() = _highlightMovie
+    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
+    val highlightMovie: LiveData<Movie>
+        get() = _highlightMovie
 
 
     init {
@@ -90,11 +87,24 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
         }
     }
 
-    fun getMovie(id: Int) {
+    fun getPopularSeries() {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.getMovie(id)) {
+            when (val result = repository.getPopularSeries()) {
                 is Result.Succes -> {
-                    _movie.postValue(result.data)
+                    _series.postValue(result.data)
+                }
+                is Result.Error -> {
+                    _error.postValue(result.message)
+                }
+            }
+        }
+    }
+
+    fun getHighlightMovie() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getHighlightMovie()) {
+                is Result.Succes -> {
+                    _highlightMovie.postValue(result.data)
                 }
                 is Result.Error -> {
                     _error.postValue(result.message)

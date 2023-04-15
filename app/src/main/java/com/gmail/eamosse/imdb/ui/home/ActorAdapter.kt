@@ -16,7 +16,7 @@ import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.SquareListItemBinding
 import com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment
 
-class ActorAdapter(private val items: List<Actor>) :
+class ActorAdapter(private val items: List<Actor>, private val OnActorClick: (ItemList) -> Unit) :
     RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
 
     val matrix = ColorMatrix().apply {
@@ -41,14 +41,10 @@ class ActorAdapter(private val items: List<Actor>) :
                     }
                 )
             }
-//            binding.squareListItemImg.setOnClickListener {
-//                val context = binding.squareListItemImg.context
-//                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-//                val transaction = fragmentManager.beginTransaction()
-//                transaction.replace(R.id.container, MovieDetailFragment.newInstance(item.id))
-//                transaction.addToBackStack(null)
-//                transaction.commit()
-//            }
+
+            binding.root.setOnClickListener {
+                OnActorClick(item)
+            }
         }
     }
 

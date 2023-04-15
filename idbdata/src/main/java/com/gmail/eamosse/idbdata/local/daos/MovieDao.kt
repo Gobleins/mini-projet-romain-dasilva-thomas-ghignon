@@ -17,6 +17,9 @@ internal interface MovieDao {
     @Query("SELECT * FROM movie WHERE movie_id = :id")
     fun getMovie(id: Int): MovieWithActorsAndCategory?
 
+    @Query("SELECT * FROM movie ORDER BY movie_id DESC LIMIT 1")
+    fun getLastMovie(): MovieWithActorsAndCategory?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveMovie(movie: MovieEntity)
 

@@ -21,7 +21,7 @@ data class CreditResponse(
     @SerializedName("profile_path")
     val profile_path: String?,
     @SerializedName("biography")
-    val biography: String
+    val biography: String?
 )
 {
     internal fun toActor() = Actor(
@@ -39,7 +39,7 @@ data class CreditResponse(
         name = this.name,
         popularity = this.popularity,
         profile_path = this.profile_path ?: "",
-        biography = this.biography
+        biography = this.biography ?: "",
     )
 }
 

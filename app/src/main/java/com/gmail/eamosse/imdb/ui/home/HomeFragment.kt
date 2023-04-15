@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +21,6 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.FragmentHomeBinding
-import com.gmail.eamosse.imdb.utils.FadingImageView
 import com.gmail.eamosse.imdb.utils.FirstItemMarginDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,6 +50,8 @@ class HomeFragment : Fragment() {
                 getPopularMovies()
                 getCategories()
                 getPopularActors()
+                getHighlightMovie()
+                getPopularSeries()
             })
 
             categories.observe(viewLifecycleOwner, Observer { categories ->
@@ -69,8 +70,34 @@ class HomeFragment : Fragment() {
                 }
             })
 
+            series.observe(viewLifecycleOwner, Observer { series ->
+                binding.homeSeriesList.adapter = SerieAdapter(series) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToSerieDetailFragment(it.identifier.toString())
+                    )
+                }
+            })
+
             actors.observe(viewLifecycleOwner, Observer {
-                binding.homeActorList.adapter = ActorAdapter(it)
+                binding.homeActorList.adapter = ActorAdapter(it) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToActorDetailFragment(it.identifier.toString())
+                    )
+                }
+            })
+
+            highlightMovie.observe(viewLifecycleOwner, Observer { movie ->
+                binding.homeHeaderImage.load("https://image.tmdb.org/t/p/w500${movie.poster_path}") {
+                    crossfade(true)
+                    crossfade(500)
+                    transformations(RoundedCornersTransformation(35f))
+                }
+
+                binding.homeHeaderImage.setOnClickListener {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(movie.identifier.toString())
+                    )
+                }
             })
 
             error.observe(viewLifecycleOwner, Observer {
@@ -78,38 +105,14 @@ class HomeFragment : Fragment() {
             })
         }
 
-        val highlightMovie = view.findViewById<ImageView>(R.id.home_header_image)
-        highlightMovie.load(R.mipmap.ic_avatar_foreground) {
-            crossfade(true)
-            crossfade(500)
-            transformations(RoundedCornersTransformation(35f))
-        }
-
-//        val headerBackgroundImage = view.findViewById<ImageView>(R.id.header_blur_background)
-//        headerBackgroundImage.load(R.mipmap.ic_avatar_foreground) {
-//            transformations(
-//                BlurTransformation(this@MainActivity,radius = 8f),
-//            )
-//            build()
-//        }
-
-
-
-
-
-
-        val fadeImage = view.findViewById<FadingImageView>(R.id.header_blur_background)
-        val blurredBitmap = blurBitmap(requireContext(), R.mipmap.ic_avatar_foreground, 10)
-        fadeImage.setImageBitmap(blurredBitmap)
-        fadeImage.setEdgeLength(100)
-        fadeImage.setFadeBottom(true)
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.category_list)
         val recyclerViewMovies = view.findViewById<RecyclerView>(R.id.home_movies_list)
+        val recyclerViewSeries = view.findViewById<RecyclerView>(R.id.home_series_list)
         val recyclerViewActor = view.findViewById<RecyclerView>(R.id.home_actor_list)
         val margin = resources.getDimensionPixelSize(R.dimen.my_margin_size)
         recyclerView.addItemDecoration(FirstItemMarginDecoration(margin))
         recyclerViewMovies.addItemDecoration(FirstItemMarginDecoration(margin))
+        recyclerViewSeries.addItemDecoration(FirstItemMarginDecoration(margin))
         recyclerViewActor.addItemDecoration(FirstItemMarginDecoration(margin))
     }
 

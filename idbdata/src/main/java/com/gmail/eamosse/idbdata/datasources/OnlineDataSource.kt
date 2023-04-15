@@ -1,6 +1,9 @@
 package com.gmail.eamosse.idbdata.datasources
 
+import android.util.Log
 import com.gmail.eamosse.idbdata.api.parse
+import com.gmail.eamosse.idbdata.api.response.Cast
+import com.gmail.eamosse.idbdata.api.response.toCast
 import com.gmail.eamosse.idbdata.api.response.toToken
 import com.gmail.eamosse.idbdata.api.safeCall
 import com.gmail.eamosse.idbdata.api.service.MovieService
@@ -17,27 +20,30 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
     MovieDataSource {
     override suspend fun getActor(id: Int): Result<Actor> {
         return safeCall {
+            Log.d("TAG", "getActor: ${id}")
             val response = service.getActor(id)
-            val moviesParse = service.getActorMovies(id).parse()
 
             when (val responseParse = response.parse()) {
                 is Result.Succes -> safeCall {
-                    when (moviesParse) {
-                        is Result.Succes -> safeCall {
-                            val movies = moviesParse.data.movies.map {
-                                it.toMovie()
-                            }
-
-                            val actor = responseParse.data.toActor()
-                            actor.movies = movies
-
-                            Result.Succes(actor)
-                        }
-                        is Result.Error -> moviesParse
-                    }
+                    val actor = responseParse.data.toActor()
+                    Result.Succes(actor)
 
                 }
                 is Result.Error -> responseParse
+            }
+        }
+    }
+
+    suspend fun getDetailPersonMovies(id: Int): Result<List<Cast>> {
+        return safeCall {
+            when(val result = service.getActorMovies(id).parse()) {
+                is Result.Succes -> {
+                    val cast = result.data.cast.map {
+                        it.toCast()
+                    }
+                    Result.Succes(cast)
+                }
+                is Result.Error -> result
             }
         }
     }
@@ -114,6 +120,11 @@ internal class OnlineDataSource @Inject constructor(private val service: MovieSe
             }
         }
     }
+
+    override suspend fun getHighlightMovie(): Result<Movie> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getMovieActors(id: Int): Result<List<Actor>> {
         TODO("Not yet implemented")
     }

@@ -21,35 +21,57 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="400dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.gmail.eamosse.imdb.utils.FadingImageView
-                        android:id="@+id/header_blur_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:scaleX="1.4"
-                        android:scaleY="1.3"
-                        android:src="@mipmap/ic_avatar_foreground"
-                        />
-
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="30dp">
+                        android:layout_marginBottom="0dp"
+                        android:paddingBottom="40dp">
 
                         <ImageView
                             android:id="@+id/home_header_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_marginBottom="0dp"
+                            android:padding="10dp"
+                            android:scaleX="0.9"
+                            android:scaleY="0.9"
                             android:visibility="visible"
+                            tools:src="@mipmap/ic_avatar_foreground"
                             tools:visibility="visible" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginEnd="70dp"
+                            android:layout_marginBottom="0dp"
+                            android:paddingBottom="30dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/playbtn" />
+                        </RelativeLayout>
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -60,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="-50dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/category"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp" />
@@ -82,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/actors"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp" />
@@ -103,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/highlightMovies"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp" />
@@ -124,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/highlightSeries"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp" />
@@ -137,7 +159,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="1"
-                    tools:listitem="@layout/category_list_item"/>
+                    tools:listitem="@layout/large_list_item"/>
             </LinearLayout>
         </ScrollView>
 

@@ -21,7 +21,10 @@ internal interface MovieService {
     suspend fun getPopularActors(): Response<ActorsResponse>
 
     @GET("person/{person_id}/movie_credits")
-    suspend fun getActorMovies(@Path("person_id") actorId: Int): Response<MoviesResponse>
+    suspend fun getActorMovies(@Path("person_id") actorId: Int): Response<DetailPersonMovieResponse>
+
+//    @GET("movie/{id}/credits")
+//    suspend fun getMovieDetailActors(@Path(value = "id") id: Int): Response<CreditsResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(@Path("movie_id") movieId: Int): Response<MovieResponse>

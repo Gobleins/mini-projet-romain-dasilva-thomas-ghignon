@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.gmail.eamosse.idbdata.data.Movie
+import com.gmail.eamosse.idbdata.data.Serie
 import com.gmail.eamosse.idbdata.utils.ItemList
 import com.gmail.eamosse.imdb.databinding.LargeListItemBinding
 
-class MovieAdapter(private val items: List<Movie>, private val OnMovieClick: (ItemList) -> Unit) :
-    RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class SerieAdapter(private val items: List<Serie>, private val OnMovieClick: (ItemList) -> Unit) :
+    RecyclerView.Adapter<SerieAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: LargeListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

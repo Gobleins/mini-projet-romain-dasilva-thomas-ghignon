@@ -1,12 +1,12 @@
-package com.gmail.eamosse.imdb.ui.listing
+package com.gmail.eamosse.imdb.ui.actorDetail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gmail.eamosse.idbdata.data.Category
-import com.gmail.eamosse.idbdata.data.Movie
+import com.gmail.eamosse.idbdata.api.response.Cast
+import com.gmail.eamosse.idbdata.data.Actor
 import com.gmail.eamosse.idbdata.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ import javax.inject.Inject
 import com.gmail.eamosse.idbdata.utils.Result
 
 @HiltViewModel
-class ListingViewModel @Inject constructor(
+class ActorDetailViewModel @Inject constructor(
     private val repository: Repository
     ) : ViewModel() {
 
@@ -23,38 +23,35 @@ class ListingViewModel @Inject constructor(
     val error: LiveData<String>
         get() = _error
 
-    private val _movies: MutableLiveData<List<Movie>> = MutableLiveData()
-    val movies: LiveData<List<Movie>>
+    private val _actor: MutableLiveData<Actor> = MutableLiveData()
+    val actor: LiveData<Actor>
+        get() = _actor
+
+    private val _movies: MutableLiveData<List<Cast>> = MutableLiveData()
+    val movies: LiveData<List<Cast>>
         get() = _movies
 
-    private val _category: MutableLiveData<Category> = MutableLiveData()
-    val category: LiveData<Category>
-        get() = _category
-
-
-    fun getCategory(id: Int) {
+    fun getDetailActor(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.getCategory(id)) {
+            when (val result = repository.getActor(id)) {
                 is Result.Succes -> {
-                    _category.postValue(result.data)
+                    _actor.postValue(result.data)
                 }
                 is Result.Error -> {
-                    _error.postValue(result.message)
+                    _error.postValue(result.exception.message)
                 }
             }
         }
     }
 
-
-    fun getMoviesByCategory(category: Category) {
-
+    fun getDetailPersonMovies(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.getMoviesByCategory(category)) {
+            when (val result = repository.getDetailPersonMovies(id)) {
                 is Result.Succes -> {
                     _movies.postValue(result.data)
                 }
                 is Result.Error -> {
-                    _error.postValue(result.message)
+                    _error.postValue(result.exception.message)
                 }
             }
         }

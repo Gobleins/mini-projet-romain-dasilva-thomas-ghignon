@@ -15,46 +15,46 @@ data class MovieResponse(
     @SerializedName("imdb_id")
     val imdb_id: String?,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("video")
-    val video: Boolean,
+    val video: Boolean?,
     @SerializedName("popularity")
-    val popularity: Double,
+    val popularity: Double?,
     @SerializedName("poster_path")
     val poster_path: String?,
     @SerializedName("backdrop_path")
     val backdrop_path: String?,
     @SerializedName("release_date")
-    val release_date: String,
+    val release_date: String?,
     @SerializedName("vote_average")
-    val vote_average: Double,
+    val vote_average: Double?,
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
 ){
     internal fun toEntity() = MovieEntity(
         id = this.id,
         imdb = this.imdb_id ?: "",
-        title = this.title,
-        video = this.video,
-        popularity = this.popularity,
+        title = this.title ?: "",
+        video = this.video ?: false,
+        popularity = this.popularity ?: 0.0,
         poster_path = this.poster_path ?: "",
         backdrop_path = this.backdrop_path ?: "",
-        release_date = this.release_date,
-        vote_average = this.vote_average,
-        overview = this.overview
+        release_date = this.release_date ?: "",
+        vote_average = this.vote_average ?: 0.0,
+        overview = this.overview ?: "",
     )
 
     internal fun toMovie() = Movie(
         id = this.id,
         imdb = this.imdb_id ?: "",
-        title = this.title,
-        video = this.video,
-        popularity = this.popularity,
+        title = this.title ?: "",
+        video = this.video ?: false,
+        popularity = this.popularity ?: 0.0,
         poster_path = this.poster_path ?: "",
         backdrop_path = this.backdrop_path ?: "",
-        release_date = this.release_date,
-        vote_average = this.vote_average,
-        overview = this.overview
+        release_date = this.release_date ?: "",
+        vote_average = this.vote_average ?: 0.0,
+        overview = this.overview ?: "",
     )
 }
 

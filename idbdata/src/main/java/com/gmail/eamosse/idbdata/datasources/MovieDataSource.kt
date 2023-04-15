@@ -9,6 +9,7 @@ interface MovieDataSource {
     suspend fun getCategories(): Result<List<Category>>
     suspend fun getCategory(id: Int): Result<Category>
     suspend fun getMovie(id: Int): Result<Movie>
+    suspend fun getHighlightMovie(): Result<Movie>
     suspend fun getMovieActors(id: Int): Result<List<Actor>>
     suspend fun getMoviesByCategory(category: Category, limit: Int = 10): Result<List<Movie>>
     suspend fun getPopularMovies(limit: Int = 10): Result<List<Movie>>

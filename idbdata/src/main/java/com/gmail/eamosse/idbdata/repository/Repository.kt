@@ -1,5 +1,7 @@
 package com.gmail.eamosse.idbdata.repository
 
+import android.util.Log
+import com.gmail.eamosse.idbdata.api.response.Cast
 import com.gmail.eamosse.idbdata.data.*
 import com.gmail.eamosse.idbdata.datasources.LocalDataSource
 import com.gmail.eamosse.idbdata.datasources.OnlineDataSource
@@ -25,6 +27,10 @@ class Repository @Inject internal constructor(
                 }
             }
         }
+    }
+
+    suspend fun getDetailPersonMovies(id: Int): Result<List<Cast>> {
+        return online.getDetailPersonMovies(id)
     }
 
     suspend fun getPopularActors(): Result<List<Actor>> {
@@ -77,6 +83,10 @@ class Repository @Inject internal constructor(
         }
     }
 
+    suspend fun getHighlightMovie(): Result<Movie> {
+        return local.getHighlightMovie()
+    }
+
     suspend fun getMoviesByCategory(category: Category): Result<List<Movie>> {
         return online.getMoviesByCategory(category, 10).also {
             if (it is Result.Succes) {
@@ -102,7 +112,6 @@ class Repository @Inject internal constructor(
             is Result.Error -> result
         }
     }
-
     suspend fun getPopularSeries(): Result<List<Serie>> {
         return when(val result = online.getPopularSeries()) {
             is Result.Succes -> {
@@ -170,7 +179,6 @@ class Repository @Inject internal constructor(
         }
     }
 
-
     /**
      * Récupérer le token permettant de consommer les ressources sur le serveur
      * Le résultat du datasource est converti en instance d'objets publiques
@@ -187,5 +195,4 @@ class Repository @Inject internal constructor(
             is Result.Error -> result
         }
     }
-
 }
