@@ -16,6 +16,10 @@
             app:destination="@id/movieDetailFragment" />
 
         <action
+            android:id="@+id/action_HomeFragment_to_serieDetailFragment"
+            app:destination="@id/serieDetailFragment" />
+
+        <action
             android:id="@+id/action_HomeFragment_to_listingFragment"
             app:destination="@id/listingFragment" />
 
@@ -52,8 +56,16 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.gmail.eamosse.imdb.ui.movieDetail.MovieDetailFragment"
-        android:label="MovieDetailFragment"
         tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="myId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/serieDetailFragment"
+        android:name="com.gmail.eamosse.imdb.ui.serieDetail.SerieDetailFragment"
+        tools:layout="@layout/fragment_serie_detail">
         <argument
             android:name="myId"
             app:argType="string" />
@@ -62,7 +74,6 @@
     <fragment
         android:id="@+id/listingFragment"
         android:name="com.gmail.eamosse.imdb.ui.listing.ListingFragment"
-        android:label="Listing"
         tools:layout="@layout/fragment_listing">
         <action
             android:id="@+id/action_listingFragment_to_movieDetailFragment"
@@ -75,7 +86,6 @@
     <fragment
         android:id="@+id/actorDetailFragment"
         android:name="com.gmail.eamosse.imdb.ui.actorDetail.ActorDetailFragment"
-        android:label="Listing"
         tools:layout="@layout/fragment_actor_detail">
         <action
             android:id="@+id/action_actorDetailFragment_to_movieDetailFragment"

@@ -159,7 +159,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="1"
-                    tools:listitem="@layout/category_list_item"/>
+                    tools:listitem="@layout/large_list_item"/>
             </LinearLayout>
         </ScrollView>
 

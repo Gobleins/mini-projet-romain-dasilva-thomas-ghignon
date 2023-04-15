@@ -22,4 +22,6 @@
     <string name="listing">Liste</string>
     <string name="ajouter_aux_favoris">Ajouter aux favoris</string>
     <string name="movies">Films</string>
+    <string name="episodes">Épisodes</string>
+    <string name="season">Saison</string>
 </resources>

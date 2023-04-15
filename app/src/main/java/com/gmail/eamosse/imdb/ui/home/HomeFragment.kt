@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,7 +21,6 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.gmail.eamosse.imdb.R
 import com.gmail.eamosse.imdb.databinding.FragmentHomeBinding
-import com.gmail.eamosse.imdb.utils.FadingImageView
 import com.gmail.eamosse.imdb.utils.FirstItemMarginDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,6 +51,7 @@ class HomeFragment : Fragment() {
                 getCategories()
                 getPopularActors()
                 getHighlightMovie()
+                getPopularSeries()
             })
 
             categories.observe(viewLifecycleOwner, Observer { categories ->
@@ -71,6 +70,14 @@ class HomeFragment : Fragment() {
                 }
             })
 
+            series.observe(viewLifecycleOwner, Observer { series ->
+                binding.homeSeriesList.adapter = SerieAdapter(series) {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToSerieDetailFragment(it.identifier.toString())
+                    )
+                }
+            })
+
             actors.observe(viewLifecycleOwner, Observer {
                 binding.homeActorList.adapter = ActorAdapter(it) {
                     findNavController().navigate(
@@ -80,7 +87,6 @@ class HomeFragment : Fragment() {
             })
 
             highlightMovie.observe(viewLifecycleOwner, Observer { movie ->
-                Log.d("TAG", "highlightMovie inside homeFragment: $movie")
                 binding.homeHeaderImage.load("https://image.tmdb.org/t/p/w500${movie.poster_path}") {
                     crossfade(true)
                     crossfade(500)
@@ -101,10 +107,12 @@ class HomeFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.category_list)
         val recyclerViewMovies = view.findViewById<RecyclerView>(R.id.home_movies_list)
+        val recyclerViewSeries = view.findViewById<RecyclerView>(R.id.home_series_list)
         val recyclerViewActor = view.findViewById<RecyclerView>(R.id.home_actor_list)
         val margin = resources.getDimensionPixelSize(R.dimen.my_margin_size)
         recyclerView.addItemDecoration(FirstItemMarginDecoration(margin))
         recyclerViewMovies.addItemDecoration(FirstItemMarginDecoration(margin))
+        recyclerViewSeries.addItemDecoration(FirstItemMarginDecoration(margin))
         recyclerViewActor.addItemDecoration(FirstItemMarginDecoration(margin))
     }
 

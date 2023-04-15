@@ -1,5 +1,7 @@
 package com.gmail.eamosse.idbdata.repository
 
+import android.util.Log
+import com.gmail.eamosse.idbdata.api.response.Cast
 import com.gmail.eamosse.idbdata.data.*
 import com.gmail.eamosse.idbdata.datasources.LocalDataSource
 import com.gmail.eamosse.idbdata.datasources.OnlineDataSource
@@ -9,7 +11,7 @@ import javax.inject.Inject
 /**
  * La classe permettant de gérer les données de l'application
  */
-class MovieRepository @Inject internal constructor(
+class Repository @Inject internal constructor(
     private val local: LocalDataSource,
     private val online: OnlineDataSource
 ) {
@@ -25,6 +27,10 @@ class MovieRepository @Inject internal constructor(
                 }
             }
         }
+    }
+
+    suspend fun getDetailPersonMovies(id: Int): Result<List<Cast>> {
+        return online.getDetailPersonMovies(id)
     }
 
     suspend fun getPopularActors(): Result<List<Actor>> {
@@ -106,7 +112,72 @@ class MovieRepository @Inject internal constructor(
             is Result.Error -> result
         }
     }
+    suspend fun getPopularSeries(): Result<List<Serie>> {
+        return when(val result = online.getPopularSeries()) {
+            is Result.Succes -> {
+                val series = result.data
+                local.saveSeries(series)
+                Result.Succes(series)
+            }
+            is Result.Error -> result
+        }
+    }
 
+    suspend fun getSerie(id: Int): Result<Serie> {
+        return online.getSerie(id).also { onlineSerie ->
+            if (onlineSerie is Result.Succes) {
+                local.getSerie(id).also { localSerie ->
+                    if (localSerie is Result.Error) {
+                        local.saveSerie(onlineSerie.data)
+                    }
+                }
+            } else {
+                val serie = local.getSerie(id)
+                if (serie != null) {
+                    return serie
+                }
+            }
+        }
+    }
+
+    suspend fun getSeriesByCategory(category: Category): Result<List<Serie>> {
+        return online.getSeriesByCategory(category, 10).also {
+            if (it is Result.Succes) {
+                local.saveSeries(it.data)
+            } else {
+                val series = local.getSeriesByCategory(category)
+                if (series != null) {
+                    return series
+                }
+            }
+        }
+    }
+
+    suspend fun getSeason(serieId: Int, seasonNumber: Int): Result<Season> {
+        return online.getSeason(serieId, seasonNumber).also {
+            if (it is Result.Succes) {
+                local.saveSeason(it.data)
+            } else {
+                val season = local.getSeason(serieId, seasonNumber)
+                if (season != null) {
+                    return season
+                }
+            }
+        }
+    }
+
+    suspend fun getEpisode(serieId: Int, seasonNumber: Int, episodeNumber: Int): Result<Episode> {
+        return online.getEpisode(serieId, seasonNumber, episodeNumber).also {
+            if (it is Result.Succes) {
+                local.saveEpisode(it.data)
+            } else {
+                val episode = local.getEpisode(serieId, seasonNumber, episodeNumber)
+                if (episode != null) {
+                    return episode
+                }
+            }
+        }
+    }
 
     /**
      * Récupérer le token permettant de consommer les ressources sur le serveur
@@ -124,5 +195,4 @@ class MovieRepository @Inject internal constructor(
             is Result.Error -> result
         }
     }
-
 }

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gmail.eamosse.idbdata.data.Serie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.serieDetail.serieDetailFragment">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.gmail.eamosse.imdb.utils.FadingImageView
+                        android:id="@+id/header_blur_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5" />
+
+<!--                    <WebView-->
+<!--                        android:id="@+id/detail_video"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="#000000"-->
+<!--                        android:backgroundTint="#000000"-->
+<!--                        android:padding="30dp">-->
+
+<!--                    </WebView>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/movie_detail_overview_title"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="30dp"-->
+<!--                            android:fontFamily="@font/roboto_medium"-->
+<!--                            android:text="@{item.title}"-->
+<!--                            android:textColor="@color/colorWhite"-->
+<!--                            android:textSize="40sp"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            tools:text="Title" />-->
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/movie_detail_overview_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@{item.name}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="40sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="Title" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/detail_tag_vote_average"
+                            app:drawableLeftCompat="@drawable/baseline_star_24"
+                            android:gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/roboto"
+                            tools:text="Average vote"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/detail_tag_popularity"
+                            app:drawableLeftCompat="@drawable/baseline_how_to_vote_24"
+                            android:gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/roboto"
+                            tools:text="Popularity"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/detail_category_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="1"
+                        tools:listitem="@layout/badge_list_item" />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tags"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:layout_marginBottom="30dp"-->
+<!--                        android:fontFamily="@font/roboto_medium"-->
+<!--                        android:text="tags"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:textSize="20sp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        tools:text="tags" />-->
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/ajouter_aux_favoris" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_overview_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:textSize="18sp"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{item.overview}"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/movie_detail_actorList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:spanCount="1"
+                        tools:listitem="@layout/category_list_item" />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/detail_actor_list_title"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/roboto_medium"-->
+<!--                        android:text="@string/actors"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:textSize="20sp" />-->
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/detail_actor_list"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+<!--                        app:spanCount="1"-->
+<!--                        tools:listitem="@layout/category_list_item" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/detail_episode_list_title_1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:fontFamily="@font/roboto_bold"-->
+<!--                        android:text="@string/season"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:textSize="20sp" />-->
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/detail_episode_list_1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+<!--                        app:spanCount="1"-->
+<!--                        tools:listitem="@layout/large_vertical_list_item" />-->
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

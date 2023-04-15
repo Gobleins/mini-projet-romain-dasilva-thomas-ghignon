@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gmail.eamosse.idbdata.data.Category
 import com.gmail.eamosse.idbdata.data.Movie
-import com.gmail.eamosse.idbdata.repository.MovieRepository
+import com.gmail.eamosse.idbdata.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import com.gmail.eamosse.idbdata.utils.Result
 
 @HiltViewModel
 class ListingViewModel @Inject constructor(
-    private val repository: MovieRepository
+    private val repository: Repository
     ) : ViewModel() {
 
     private val _error: MutableLiveData<String> = MutableLiveData()
@@ -36,7 +36,6 @@ class ListingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repository.getCategory(id)) {
                 is Result.Succes -> {
-                    Log.d("TAG", "getCategory: ${result.data}")
                     _category.postValue(result.data)
                 }
                 is Result.Error -> {

@@ -21,7 +21,10 @@ internal interface MovieService {
     suspend fun getPopularActors(): Response<ActorsResponse>
 
     @GET("person/{person_id}/movie_credits")
-    suspend fun getActorMovies(@Path("person_id") actorId: Int): Response<MoviesResponse>
+    suspend fun getActorMovies(@Path("person_id") actorId: Int): Response<DetailPersonMovieResponse>
+
+//    @GET("movie/{id}/credits")
+//    suspend fun getMovieDetailActors(@Path(value = "id") id: Int): Response<CreditsResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(@Path("movie_id") movieId: Int): Response<MovieResponse>
@@ -35,5 +38,26 @@ internal interface MovieService {
     @GET("discover/movie")
     suspend fun getMoviesByCategory(@Query("with_genres") category: Int): Response<MoviesResponse>
 
+    @GET("tv/popular")
+    suspend fun getPopularSeries(): Response<SeriesResponse>
+
+    @GET("discover/tv")
+    suspend fun getSeriesByCategory(@Query("with_genres") category: Int): Response<SeriesResponse>
+
+    @GET("tv/{tv_id}")
+    suspend fun getSerie(serieId: Int): Response<SerieResponse>
+
+    @GET("tv/{tv_id}/season/{season_number}/episode/{episode_number}")
+    suspend fun getEpisode(
+        @Path("tv_id") serieId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<EpisodeResponse>
+
+    @GET("tv/{tv_id}/season/{season_number}")
+    suspend fun getSeason(@Path("tv_id") serieId: Int, @Path("season_number") seasonNumber: Int): Response<SeasonResponse>
+
+    @GET("/tv/{serieId}/credits")
+    suspend fun getSerieActors(serieId: Int): Response<CreditsTvResponse>
 
 }

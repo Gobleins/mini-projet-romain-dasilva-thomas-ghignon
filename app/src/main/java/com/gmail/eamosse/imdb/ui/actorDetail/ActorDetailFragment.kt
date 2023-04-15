@@ -47,12 +47,7 @@ class ActorDetailFragment : Fragment() {
         with(viewModel) {
             viewModel.getDetailActor(args.actor.toInt())
 
-            Log.d("TAG", "ACTOR DETAIL")
-
             actor.observe(viewLifecycleOwner, Observer { it ->
-
-
-                Log.d("TAG", "onViewCreated: ${it}")
 
                 binding.item = it
                 binding.actorDetailMovieList.adapter = MovieAdapter(it.movies) {
@@ -62,6 +57,17 @@ class ActorDetailFragment : Fragment() {
                         )
                     )
                 }
+
+                getDetailPersonMovies(args.actor.toInt())
+                movies.observe(viewLifecycleOwner, Observer { it ->
+                    binding.actorDetailMovieList.adapter = CastAdapter(it) {
+                        findNavController().navigate(
+                            ActorDetailFragmentDirections.actionActorDetailFragmentToMovieDetailFragment(
+                                it.id.toString()
+                            )
+                        )
+                    }
+                })
 
 
                 val fadeImage = view.findViewById<FadingImageView>(R.id.actor_detail_header)

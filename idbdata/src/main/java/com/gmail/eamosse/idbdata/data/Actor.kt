@@ -9,6 +9,7 @@ data class Actor(
     override val name: String,
     val popularity: Double?,
     val profile_path: String?,
+    val biography: String?,
     var movies: List<Movie> = listOf(),
 ): ItemList {
     override val identifier: Int
@@ -17,13 +18,11 @@ data class Actor(
         get() = profile_path ?: ""
 }
 
-
-
-
 internal fun Actor.toEntity() = ActorEntity(
     id = this.id,
     imdb_id = this.imdb_id ?: "",
     name = this.name,
     popularity = this.popularity ?: 0.0,
-    profile_path = this.profile_path ?: ""
+    profile_path = this.profile_path ?: "",
+    biography = this.biography ?: "",
 )
